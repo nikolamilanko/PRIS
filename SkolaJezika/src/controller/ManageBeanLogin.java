@@ -23,7 +23,7 @@ public class ManageBeanLogin {
 		zanimanja.add("administrator");
 		zanimanja.add("predavac");
 		zanimanja.add("polaznik");
-		;
+		;;
 	}
 
 	public String getZanimanje() {
