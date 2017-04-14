@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Slika11.findAll", query="SELECT s FROM Slika11 s")
+@Table(name="SLIKA11")
 public class Slika11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 

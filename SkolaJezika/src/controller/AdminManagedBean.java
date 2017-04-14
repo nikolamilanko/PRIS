@@ -3,6 +3,8 @@ package controller;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.jms.Session;
 
 import beans.AdministratorBeanRemote;
 
@@ -11,12 +13,12 @@ import beans.AdministratorBeanRemote;
 public class AdminManagedBean {
 	private String username;
 	private String password;
-	
+
 	@EJB
 	AdministratorBeanRemote abr;
 
 	public AdminManagedBean() {
-		 
+
 	}
 
 	public String getUsername() {
@@ -42,8 +44,17 @@ public class AdminManagedBean {
 	public void setAbr(AdministratorBeanRemote abr) {
 		this.abr = abr;
 	}
-	
+
 	public void login() {
 		abr.login(username, password);
+	}
+
+	public void ispisi() {
+		System.out.println("ADMIN ISPISI");
+		System.out.println(abr.getAdministrator().getImeadmin());
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().get("test");
+		System.out.println(context);
+		System.out.println(context.getExternalContext().getSessionMap().get("test"));
 	}
 }

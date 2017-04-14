@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Predavac11.findAll", query="SELECT p FROM Predavac11 p")
+@Table(name="PREDAVAC11")
 public class Predavac11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 

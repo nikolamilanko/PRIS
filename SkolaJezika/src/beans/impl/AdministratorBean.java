@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import beans.AdministratorBeanRemote;
 import entities.Administrator11;
+import entities.Lekcija11;
 
 /**
  * Session Bean implementation class AdministratorBean
@@ -50,4 +51,6 @@ public class AdministratorBean implements AdministratorBeanRemote {
 	public void setAdministrator(Administrator11 administrator) {
 		this.administrator = administrator;
 	}
+	
+	
 }
