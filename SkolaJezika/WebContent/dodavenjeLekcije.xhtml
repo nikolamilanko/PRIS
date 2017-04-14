@@ -13,14 +13,8 @@
 		<h:form>
 			<h:outputText value="Izaberite tip lekcije: " />
 			<h:panelGrid columns="2">
-				<!-- <p:selectOneRadio 
-					value="#{dodavanjeLekcijeManagedBean.radioNumberChecked}">
-
-					<f:selectItem  itemValue="1" itemLabel="Slike i tekst" />
-					<f:selectItem itemValue="2" itemLabel="Video" />
-					<p:ajax  update="results" process=""></p:ajax>
-				</p:selectOneRadio> -->
-				<h:commandButton value="Lekcija sa slikom i tekstom" action="#{dodavanjeLekcijeManagedBean.promeniSaSlikom()}" execute="@form" render="results" ></h:commandButton>
+				
+				<p:commandButton value="Lekcija sa slikom i tekstom" action="#{dodavanjeLekcijeManagedBean.promeniSaSlikom()}" execute="@form" render="results" ></p:commandButton>
 			</h:panelGrid>
 		</h:form>
 		<h:form id="results"

@@ -45,9 +45,11 @@ public class DodavanjeLekcijeManagedBean {
 	boolean saVideom = false;
 	
 	public void promeniSaSlikom(){
+		saVideom = false;
 		saSlikom = true;
 	}
 	public void promeniSaVideom(){
+		saSlikom = false;
 		saVideom = true;
 	}
 	
