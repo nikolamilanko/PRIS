@@ -8,6 +8,8 @@ import entities.Administrator11;
 public interface AdministratorBeanRemote {
 
 	boolean login(String username, String password);
+	
+	boolean dodajPredavaca(String ime, String prezime, String titula, String username, String password);
 
 	public Administrator11 getAdministrator();
 }

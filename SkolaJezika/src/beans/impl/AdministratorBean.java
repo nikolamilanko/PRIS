@@ -51,6 +51,14 @@ public class AdministratorBean implements AdministratorBeanRemote {
 	public void setAdministrator(Administrator11 administrator) {
 		this.administrator = administrator;
 	}
+
+	@Override
+	public boolean dodajPredavaca(String ime, String prezime, String titula, String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 	
 	
 }

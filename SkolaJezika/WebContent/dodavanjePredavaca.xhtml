@@ -12,10 +12,62 @@
 	<f:view>
 		<h:form>
 			<p:panelGrid columns="2">
-				<h:outputText value="Name:" />
-				<h:inputText value="#{}" />
+				<f:facet name="header">
+					Novi predavac
+				</f:facet>
+
+				<h:outputText value="Ime:" />
+				<h:inputText value="#{dodavanjePredavacaMB.ime}" />
+
+				<h:outputText value="Prezime:" />
+				<h:inputText value="#{dodavanjePredavacaMB.prezime}" />
+
+				<h:outputText value="Titula:" />
+				<h:inputText value="#{dodavanjePredavacaMB.titula}" />
+
+				<h:outputText value="Username:" />
+				<h:inputText value="#{dodavanjePredavacaMB.username}" />
+
+				<h:outputText value="Password:" />
+				<h:inputSecret value="#{dodavanjePredavacaMB.password}" />
+
+				<h:outputText value="Potvrdi password:" />
+				<h:inputSecret value="#{dodavanjePredavacaMB.potvrdiPassword}" />
+
+				<p:commandButton value="Sacuvaj"
+					actionListener="#{dodavanjePredavacaMB.sacuvaj()}"
+					style="width:150px;">
+					<f:ajax render="losPass" />
+				</p:commandButton>
+				<p:commandButton value="Nazad" action="/admin.xhtml"
+					style="width:150px;" />
 			</p:panelGrid>
+
 		</h:form>
+
+		<p:dialog header="Dodavanje predavaca" widgetVar="dlgUspesno"
+			modal="true" height="100">
+			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
+				<h:outputText value="Uspesno dodavanje!" />
+				<h:button value="OK" outcome="/admin.xhtml" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<p:dialog header="Dodavanje predavaca" widgetVar="dlgNeuspesno"
+			modal="true" height="100">
+			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
+				<h:outputText value="Dodavanje nije uspelo!" />
+				<h:button value="OK" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<p:dialog header="Potvrda passworda" widgetVar="dlgLosPassword"
+			modal="true" height="100">
+			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
+				<h:outputText value="Niste uneli dobar password" />
+				<h:button value="OK" style="margin:auto;" />
+			</h:panelGrid>
+		</p:dialog>
 	</f:view>
 </body>
 </html>

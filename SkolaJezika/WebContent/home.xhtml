@@ -27,7 +27,7 @@
 				<h:inputText value="#{adminManagedBean.username}" />
 				<h:outputLabel value="Password: " />
 				<h:inputText value="#{adminManagedBean.password}" />
-				<p:commandButton value="Login" actionListener="#{adminManagedBean.login()}" action="/admin.xhtml"></p:commandButton>
+				<p:commandButton value="Login" actionListener="#{adminManagedBean.login()}" action="/admin.xhtml" />
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
@@ -35,14 +35,14 @@
 				<h:inputText value="#{manageBeanLogin.username}" />
 				<h:outputLabel value="Password: " />
 				<h:inputText value="#{manageBeanLogin.password}" />
-				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
+				<p:commandButton value="Login" action="#{manageBeanLogin.login()}" />
 			</h:panelGroup>
 			<h:panelGroup rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
 				<h:outputLabel value="Username: " />
 				<h:inputText value="#{manageBeanLogin.username}" />
 				<h:outputLabel value="Password: " />
 				<h:inputText value="#{manageBeanLogin.password}" />
-				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
+				<p:commandButton value="Login" action="#{manageBeanLogin.login()}" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</h:form>
