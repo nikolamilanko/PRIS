@@ -1,24 +1,48 @@
 package controller;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.jms.Session;
 
 import beans.AdministratorBeanRemote;
+import beans.BazaBeanRemote;
+import entities.Kurs11;
+import entities.Predavac11;
 
-@ManagedBean
+@ManagedBean(name="adminMB")
 @SessionScoped
 public class AdminManagedBean {
 	private String username;
 	private String password;
+	
+	private List<Kurs11> kursevi;
+	private List<Predavac11> predavaci;
 
 	@EJB
-	AdministratorBeanRemote abr;
+	AdministratorBeanRemote adminBR;
+	
+	@EJB
+	BazaBeanRemote bazaBR;
+
+	@PostConstruct
+	private void init() {
+		kursevi = bazaBR.vratiSveKurseve();
+		predavaci = bazaBR.vratiSvePredavace();
+	}
 
 	public AdminManagedBean() {
 
+	}
+
+	public List<Predavac11> getPredavaci() {
+		return predavaci;
+	}
+
+	public void setPredavaci(List<Predavac11> predavaci) {
+		this.predavaci = predavaci;
 	}
 
 	public String getUsername() {
@@ -37,24 +61,36 @@ public class AdminManagedBean {
 		this.password = password;
 	}
 
-	public AdministratorBeanRemote getAbr() {
-		return abr;
+	public AdministratorBeanRemote getAdminBR() {
+		return adminBR;
 	}
 
-	public void setAbr(AdministratorBeanRemote abr) {
-		this.abr = abr;
+	public void setAdminBR(AdministratorBeanRemote adminBR) {
+		this.adminBR = adminBR;
 	}
 
+	public List<Kurs11> getKursevi() {
+		return kursevi;
+	}
+
+	public void setKursevi(List<Kurs11> kursevi) {
+		this.kursevi = kursevi;
+	}
+
+	public BazaBeanRemote getBazaBR() {
+		return bazaBR;
+	}
+	
 	public void login() {
-		abr.login(username, password);
+		adminBR.login(username, password);
 	}
 
-	public void ispisi() {
-		System.out.println("ADMIN ISPISI");
-		System.out.println(abr.getAdministrator().getImeadmin());
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getSessionMap().get("test");
-		System.out.println(context);
-		System.out.println(context.getExternalContext().getSessionMap().get("test"));
-	}
+//	public void ispisi() {
+//		System.out.println("ADMIN ISPISI");
+//		System.out.println(abr.getAdministrator().getImeadmin());
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		context.getExternalContext().getSessionMap().get("test");
+//		System.out.println(context);
+//		System.out.println(context.getExternalContext().getSessionMap().get("test"));
+//	}
 }
