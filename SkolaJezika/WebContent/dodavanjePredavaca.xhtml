@@ -11,7 +11,10 @@
 <body>
 	<f:view>
 		<h:form>
-			Novi Predavac
+			<p:panelGrid columns="2">
+				<h:outputText value="Name:" />
+				<h:inputText value="#{}" />
+			</p:panelGrid>
 		</h:form>
 	</f:view>
 </body>

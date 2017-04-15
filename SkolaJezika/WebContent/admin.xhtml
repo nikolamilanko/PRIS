@@ -8,15 +8,16 @@
 <h:head>
 	<style type="text/css">
 		#myform {
-			display: block;
-			margin: 0 auto;
+			margin-top: 10em;
+			margin-left: 5em;
+			margin-right: 5em;
 		}
+
 		#mydiv {
 			bottom: 0;
 			left: 0;
 			right: 0;
 			margin-bottom: 1em;
-			position: absolute;
 		}
 	</style>
 </h:head>
@@ -108,17 +109,14 @@
 				</p:row>
 			</p:panelGrid>
 
-
-
-
-			<div id="mydiv" align="center">
+		</h:form>
+		
+		<div id="mydiv" align="center">
 				<p>Ako zelite da promenite lozinku pritisnite dugme 'Promena
 					lozinke'</p>
 				<h:button value="Promena lozinke" outcome="/dodavanjeKursa.xhtml"
 					style="width:150px;" />
 			</div>
-
-		</h:form>
 	</f:view>
 </body>
 </html>
