@@ -25,11 +25,11 @@
 			<h:panelGrid columns="2"
 				rendered="#{manageBeanLogin.zanimanje eq 'administrator'}">
 				<p:outputLabel value="Username: " />
-				<p:inputText value="#{adminManagedBean.username}" />
+				<p:inputText value="#{adminMB.username}" />
 				<p:outputLabel value="Password: " />
-				<p:password value="#{adminManagedBean.password}" />
+				<p:password value="#{adminMB.password}" />
 				<p:commandButton value="Login"
-					actionListener="#{adminManagedBean.login()}" action="/admin.xhtml" />
+					actionListener="#{adminMB.login()}" />
 			</h:panelGrid>
 			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
 				<p:outputLabel value="Username: " />
