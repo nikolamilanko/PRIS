@@ -7,29 +7,37 @@
 
 <h:head>
 	<style type="text/css">
-		#myform {
-			margin-top: 10em;
-			margin-left: 5em;
-			margin-right: 5em;
-		}
+#myform {
+	margin-top: 5em;
+	margin-left: 5em;
+	margin-right: 5em;
+}
 
-		#mydiv {
-			bottom: 0;
-			left: 0;
-			right: 0;
-			margin-bottom: 1em;
-		}
-	</style>
+#mydiv {
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin-bottom: 1em;
+}
+</style>
+
 </h:head>
 
-<body>
+<h:body>
 	<f:view>
+
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{adminMB.onLoad()}" />
+		</f:metadata>
+		
+		<p:commandButton value="Logout" action="#{adminMB.logout()}" />
+		
 		<h:form id="myform">
 			<p:panelGrid>
 
 				<p:row>
 					<p:column>
-						<p:dataTable var="kurs" value="#{adminMB.kursevi}"
+						<p:dataTable id="kursTable" var="kurs" value="#{adminMB.kursevi}"
 							scrollable="true">
 							<f:facet name="header">
             					Svi kursevi
@@ -75,8 +83,8 @@
 
 				<p:row>
 					<p:column>
-						<p:dataTable var="predavac" value="#{adminMB.predavaci}"
-							scrollable="true">
+						<p:dataTable id="predavacTable" var="predavac"
+							value="#{adminMB.predavaci}" scrollable="true">
 							<f:facet name="header">
             					Svi predavaci
         					</f:facet>
@@ -110,13 +118,13 @@
 			</p:panelGrid>
 
 		</h:form>
-		
+
 		<div id="mydiv" align="center">
-				<p>Ako zelite da promenite lozinku pritisnite dugme 'Promena
-					lozinke'</p>
-				<h:button value="Promena lozinke" outcome="/dodavanjeKursa.xhtml"
-					style="width:150px;" />
-			</div>
+			<p>Ako zelite da promenite lozinku pritisnite dugme 'Promena
+				lozinke'</p>
+			<p:button value="Promena lozinke" outcome="/dodavanjeKursa.xhtml"
+				style="width:150px;" />
+		</div>
 	</f:view>
-</body>
+</h:body>
 </html>

@@ -6,68 +6,98 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<style>
+#dodavanje {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 40em;
+	height: 20em;
+	margin-top: -10em; /*polovina vrednosti height*/
+	margin-left: -11em; /*polovina vrednosti width*/
+}
 
+#mybody {
+	background-color: #f3f3f3;
+}
+</style>
 </h:head>
-<body>
+
+<h:body id="mybody">
 	<f:view>
-		<h:form>
-			<p:panelGrid columns="2">
+		<h:form id="dodavanje">
+
+			<h:panelGrid columns="3" cellpadding="5">
 				<f:facet name="header">
 					Novi predavac
 				</f:facet>
 
-				<h:outputText value="Ime:" />
-				<h:inputText value="#{dodavanjePredavacaMB.ime}" />
+				<h:outputLabel for="ime" value="Ime: " />
+				<p:inputText id="ime" value="#{dodavanjePredavacaMB.ime}"
+					label="ime" />
+				<p:message for="ime" />
 
-				<h:outputText value="Prezime:" />
-				<h:inputText value="#{dodavanjePredavacaMB.prezime}" />
+				<h:outputLabel for="prezime" value="Prezime: " />
+				<p:inputText id="prezime" value="#{dodavanjePredavacaMB.prezime}"
+					label="prezime" />
+				<p:message for="prezime" />
 
-				<h:outputText value="Titula:" />
-				<h:inputText value="#{dodavanjePredavacaMB.titula}" />
+				<h:outputLabel for="titula" value="Titula: " />
+				<p:inputText id="titula" value="#{dodavanjePredavacaMB.titula}"
+					label="titula" />
+				<p:message for="titula" />
 
-				<h:outputText value="Username:" />
-				<h:inputText value="#{dodavanjePredavacaMB.username}" />
+				<h:outputLabel for="email" value="Email: " />
+				<p:inputText id="email" value="#{dodavanjePredavacaMB.email}"
+					label="email"
+					validatorMessage="#{dodavanjePredavacaMB.email} is not a valid email">
+					<f:validateRegex
+						pattern="[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" />
+				</p:inputText>
+				<p:message for="email" />
 
-				<h:outputText value="Password:" />
-				<h:inputSecret value="#{dodavanjePredavacaMB.password}" />
+				<h:outputLabel for="username" value="Username: " />
+				<p:inputText id="username" value="#{dodavanjePredavacaMB.username}"
+					label="username" required="true"
+					requiredMessage="Unesite username." />
+				<p:message for="username" />
 
-				<h:outputText value="Potvrdi password:" />
-				<h:inputSecret value="#{dodavanjePredavacaMB.potvrdiPassword}" />
+				<h:outputLabel for="password" value="Password: " />
+				<p:password id="password" value="#{dodavanjePredavacaMB.password}"
+					match="potvrda" label="password" required="true" feedback="true"
+					validatorMessage="Password can only contain upper and lower case letters and numbers." />
+				<p:message for="password" />
+
+				<h:outputLabel for="potvrda" value="Potvrdi password: " />
+				<p:password id="potvrda"
+					value="#{dodavanjePredavacaMB.potvrdiPassword}"
+					label="potvrdi password" required="true" />
+				<p:message for="potvrda" />
 
 				<p:commandButton value="Sacuvaj"
-					actionListener="#{dodavanjePredavacaMB.sacuvaj()}"
-					style="width:150px;">
-					<f:ajax render="losPass" />
-				</p:commandButton>
-				<p:commandButton value="Nazad" action="/admin.xhtml"
-					style="width:150px;" />
-			</p:panelGrid>
+					action="#{dodavanjePredavacaMB.sacuvajPredavaca()}" style="width:150px;"
+					update="dodavanje" validateClient="true" />
+				<p:button value="Nazad" outcome="/admin.xhtml"
+					style="width:150px;"  />
+			</h:panelGrid>
+
+			<p:dialog header="Dodavanje predavaca" widgetVar="dlgUspesno"
+				modal="true" height="100" responsive="true">
+				<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
+					<h:outputText value="Uspesno dodavanje!" />
+					<p:button value="OK" outcome="/admin.xhtml" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="Dodavanje predavaca" widgetVar="dlgNeuspesno"
+				modal="true" height="100" responsive="true">
+				<h:panelGrid columns="1" cellpadding="5" cellspacing="5" >
+					<h:outputText value="Dodavanje nije uspelo!" />
+					<p:button value="OK" />
+				</h:panelGrid>
+			</p:dialog>
 
 		</h:form>
-
-		<p:dialog header="Dodavanje predavaca" widgetVar="dlgUspesno"
-			modal="true" height="100">
-			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
-				<h:outputText value="Uspesno dodavanje!" />
-				<h:button value="OK" outcome="/admin.xhtml" />
-			</h:panelGrid>
-		</p:dialog>
-
-		<p:dialog header="Dodavanje predavaca" widgetVar="dlgNeuspesno"
-			modal="true" height="100">
-			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
-				<h:outputText value="Dodavanje nije uspelo!" />
-				<h:button value="OK" />
-			</h:panelGrid>
-		</p:dialog>
-
-		<p:dialog header="Potvrda passworda" widgetVar="dlgLosPassword"
-			modal="true" height="100">
-			<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
-				<h:outputText value="Niste uneli dobar password" />
-				<h:button value="OK" style="margin:auto;" />
-			</h:panelGrid>
-		</p:dialog>
 	</f:view>
-</body>
+</h:body>
 </html>

@@ -1,29 +1,40 @@
 package controller;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.primefaces.context.RequestContext;
 
 import beans.AdministratorBeanRemote;
 
-@ManagedBean(name="dodavanjePredavacaMB")
+@ManagedBean(name = "dodavanjePredavacaMB")
 @ViewScoped
 public class DodavanjePredavacaManagedBean {
 
+	@Size(min = 1, max = 30)
 	private String ime;
+
+	@Size(min = 1, max = 30)
 	private String prezime;
+
+	@Size(min = 2, max = 30)
 	private String titula;
-	
+	private String email;
+
+	@Size(min = 1, max = 30)
 	private String username;
+
+	@Pattern(regexp = "^[a-zA-Z0-9]*$")
 	private String password;
+
 	private String potvrdiPassword;
-	
+
 	@EJB
 	AdministratorBeanRemote abr;
-	
+
 	public DodavanjePredavacaManagedBean() {
 
 	}
@@ -67,7 +78,7 @@ public class DodavanjePredavacaManagedBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getPotvrdiPassword() {
 		return potvrdiPassword;
 	}
@@ -76,18 +87,22 @@ public class DodavanjePredavacaManagedBean {
 		this.potvrdiPassword = potvrdiPassword;
 	}
 
-	public void sacuvaj() {
-		if (password.equals(potvrdiPassword)) {
-			if (abr.dodajPredavaca(ime, prezime, titula, username, password)) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.execute("PF('dlgUspesno').show();");
-			} else {
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.execute("PF('dlgNeuspesno').show();");
-			}
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void sacuvajPredavaca() {
+		if (abr.dodajPredavaca(ime, prezime, titula, email, username, password)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('dlgUspesno').show();");
 		} else {
 			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('dlgLosPassword').show();");
+			context.execute("PF('dlgNeuspesno').show();");
 		}
+
 	}
 }

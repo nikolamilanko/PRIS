@@ -24,10 +24,10 @@
 		<h:panelGroup id="results">
 			<h:panelGroup rendered="#{manageBeanLogin.zanimanje eq 'administrator'}">
 				<h:outputLabel value="Username: " />
-				<h:inputText value="#{adminManagedBean.username}" />
+				<h:inputText value="#{adminMB.username}" />
 				<h:outputLabel value="Password: " />
-				<h:inputText value="#{adminManagedBean.password}" />
-				<p:commandButton value="Login" actionListener="#{adminManagedBean.login()}" action="/admin.xhtml" />
+				<h:inputText value="#{adminMB.password}" />
+				<p:commandButton value="Login" actionListener="#{adminMB.login()}" action="/admin.xhtml" />
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">

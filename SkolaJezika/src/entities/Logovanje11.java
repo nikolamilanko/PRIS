@@ -10,7 +10,10 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Logovanje11.findAll", query="SELECT l FROM Logovanje11 l")
+@NamedQueries({
+	@NamedQuery(name="Logovanje11.findAll", query="SELECT l FROM Logovanje11 l"),
+	@NamedQuery(name="Logovanje11.findForUsername", query="SELECT l FROM Logovanje11 l WHERE l.username = :username")
+})
 @Table(name="LOGOVANJE11")
 public class Logovanje11 implements Serializable {
 	private static final long serialVersionUID = 1L;

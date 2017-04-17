@@ -2,10 +2,11 @@ package controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import beans.AdministratorBeanRemote;
 import beans.BazaBeanRemote;
@@ -27,8 +28,7 @@ public class AdminManagedBean {
 	@EJB
 	BazaBeanRemote bazaBR;
 
-	@PostConstruct
-	private void init() {
+	public void onLoad() {
 		kursevi = bazaBR.vratiSveKurseve();
 		predavaci = bazaBR.vratiSvePredavace();
 	}
@@ -84,6 +84,12 @@ public class AdminManagedBean {
 	public void login() {
 		adminBR.login(username, password);
 	}
+	
+	public String logout() {
+		((HttpSession) FacesContext.getCurrentInstance().getExternalContext()
+		         .getSession(false)).invalidate();
+        return "/home.xhtml?faces-redirect=true";
+    }
 
 //	public void ispisi() {
 //		System.out.println("ADMIN ISPISI");
