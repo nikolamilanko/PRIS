@@ -1,28 +1,51 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.jms.Session;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
 import beans.AdministratorBeanRemote;
+import beans.BazaBeanRemote;
+import entities.Kurs11;
+import entities.Predavac11;
 
-@ManagedBean
+@ManagedBean(name="adminMB")
 @SessionScoped
 public class AdminManagedBean {
 	private String username;
 	private String password;
+	
+	private List<Kurs11> kursevi;
+	private List<Predavac11> predavaci;
 
 	@EJB
-	AdministratorBeanRemote abr;
+	AdministratorBeanRemote adminBR;
+	
+	@EJB
+	BazaBeanRemote bazaBR;
+
+	public void onLoad() {
+		kursevi = bazaBR.vratiSveKurseve();
+		predavaci = bazaBR.vratiSvePredavace();
+	}
 
 	public AdminManagedBean() {
 
+	}
+
+	public List<Predavac11> getPredavaci() {
+		return predavaci;
+	}
+
+	public void setPredavaci(List<Predavac11> predavaci) {
+		this.predavaci = predavaci;
 	}
 
 	public String getUsername() {
@@ -41,17 +64,29 @@ public class AdminManagedBean {
 		this.password = password;
 	}
 
-	public AdministratorBeanRemote getAbr() {
-		return abr;
+	public AdministratorBeanRemote getAdminBR() {
+		return adminBR;
 	}
 
-	public void setAbr(AdministratorBeanRemote abr) {
-		this.abr = abr;
+	public void setAdminBR(AdministratorBeanRemote adminBR) {
+		this.adminBR = adminBR;
 	}
 
+	public List<Kurs11> getKursevi() {
+		return kursevi;
+	}
+
+	public void setKursevi(List<Kurs11> kursevi) {
+		this.kursevi = kursevi;
+	}
+
+	public BazaBeanRemote getBazaBR() {
+		return bazaBR;
+	}
+	
 	public void login() {
 
-		if (abr.login(username, password)) {
+		if (adminBR.login(username, password)) {
 
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
@@ -65,14 +100,21 @@ public class AdminManagedBean {
 			username ="";
 			password= "";
 		}
+		adminBR.login(username, password);
 	}
+	
+	public String logout() {
+		((HttpSession) FacesContext.getCurrentInstance().getExternalContext()
+		         .getSession(false)).invalidate();
+        return "/home.xhtml?faces-redirect=true";
+    }
 
-	public void ispisi() {
-		System.out.println("ADMIN ISPISI");
-		System.out.println(abr.getAdministrator().getImeadmin());
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.getExternalContext().getSessionMap().get("test");
-		System.out.println(context);
-		System.out.println(context.getExternalContext().getSessionMap().get("test"));
-	}
+//	public void ispisi() {
+//		System.out.println("ADMIN ISPISI");
+//		System.out.println(abr.getAdministrator().getImeadmin());
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		context.getExternalContext().getSessionMap().get("test");
+//		System.out.println(context);
+//		System.out.println(context.getExternalContext().getSessionMap().get("test"));
+//	}
 }

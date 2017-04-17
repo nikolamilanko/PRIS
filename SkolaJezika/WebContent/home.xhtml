@@ -29,21 +29,21 @@
 				<p:outputLabel value="Password: " />
 				<p:password value="#{adminManagedBean.password}" />
 				<p:commandButton value="Login"
-					actionListener="#{adminManagedBean.login()}"></p:commandButton>
+					actionListener="#{adminManagedBean.login()}" action="/admin.xhtml" />
 			</h:panelGrid>
 			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
 				<p:outputLabel value="Username: " />
 				<p:inputText value="#{manageBeanLogin.username}" />
 				<p:outputLabel value="Password: " />
 				<p:inputText value="#{manageBeanLogin.password}" />
-				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
+				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"/>
 			</h:panelGrid>
 			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
 				<p:outputLabel value="Username: " />
 				<p:inputText value="#{manageBeanLogin.username}" />
 				<p:outputLabel value="Password: " />
 				<p:inputText value="#{manageBeanLogin.password}" />
-				<p:commandButton  value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
+				<p:commandButton  value="Login" action="#{manageBeanLogin.login()}"/>
 			</h:panelGrid>
 		</h:panelGroup>
 		<p:dialog header="GRESKA" widgetVar="dlg1" minHeight="40">
