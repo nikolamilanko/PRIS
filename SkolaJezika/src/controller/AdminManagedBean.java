@@ -100,7 +100,7 @@ public class AdminManagedBean {
 			username ="";
 			password= "";
 		}
-		adminBR.login(username, password);
+	
 	}
 	
 	public String logout() {
