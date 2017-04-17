@@ -10,18 +10,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-import beans.impl.TestBazaBean;
+import beans.impl.KomunikacijaSaBazomBean;
 import entities.Kurs11;
 import entities.Lekcija11;
 import entities.Slika11;
@@ -31,31 +31,72 @@ import entities.Slika11;
 public class DodavanjeLekcijeManagedBean {
 
 	@EJB
-	TestBazaBean testBaza;
+	KomunikacijaSaBazomBean testBaza;
 
 	boolean isClicked = false;
-	private StreamedContent[] listImages;
 	private int radioNumberChecked = 0;
 	List<File> fajlovi = new ArrayList<>();
 	List<Slika11> slike = new ArrayList<>();
-	private String opisLekcije;
+	private String opisLekcije = "";
 	int i = 0;
+	String naziv = "";
+	private List<String> tipoviLekcije;
+	private String tipLekcije;
+	private String videoLink = "";
+
+	@PostConstruct
+	private void init() {
+		tipoviLekcije = new ArrayList<>();
+		tipoviLekcije.add("Lekcija sa slikom i tekstom");
+		tipoviLekcije.add("Lekcija sa videom");
+
+	}
+
+	public String getVideoLink() {
+		return videoLink;
+	}
+
+	public void setVideoLink(String videoLink) {
+		this.videoLink = videoLink;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getTipLekcije() {
+		return tipLekcije;
+	}
+
+	public void setTipLekcije(String tipLekcije) {
+		this.tipLekcije = tipLekcije;
+	}
+
+	public List<String> getTipoviLekcije() {
+		return tipoviLekcije;
+	}
+
+	public void setTipoviLekcije(List<String> tipoviLekcije) {
+		this.tipoviLekcije = tipoviLekcije;
+	}
+
 	boolean saSlikom = false;
-	
+
 	boolean saVideom = false;
-	
-	public void promeniSaSlikom(){
+
+	public void promeniSaSlikom() {
 		saVideom = false;
 		saSlikom = true;
 	}
-	public void promeniSaVideom(){
+
+	public void promeniSaVideom() {
 		saSlikom = false;
 		saVideom = true;
 	}
-	
-	
-	
-	
 
 	public boolean isSaVideom() {
 		return saVideom;
@@ -84,14 +125,6 @@ public class DodavanjeLekcijeManagedBean {
 
 	public void setOpisLekcije(String opisLekcije) {
 		this.opisLekcije = opisLekcije;
-	}
-
-	public StreamedContent[] getListImages() {
-		return listImages;
-	}
-
-	public void setListImages(StreamedContent[] listImages) {
-		this.listImages = listImages;
 	}
 
 	public int getI() {
@@ -134,13 +167,13 @@ public class DodavanjeLekcijeManagedBean {
 		System.out.println("upload");
 		System.out.println("OPIS LEKCIJE " + opisLekcije);
 		UploadedFile uploadedFile = event.getFile();
-		File theDir = new File("D:/images");
+		File theDir = new File("D:/"+testBaza.findKurs().getNazivkursa()+"/"+naziv);
 		isClicked = true;
 		if (!theDir.exists()) {
 			theDir.mkdirs();
 		}
 
-		File fileToWrite = new File("D:/images/" + uploadedFile.getFileName());
+		File fileToWrite = new File("D:/"+testBaza.findKurs().getNazivkursa()+"/"+naziv+"/" + uploadedFile.getFileName());
 		fajlovi.add(fileToWrite);
 		Slika11 slika11 = new Slika11();
 		slika11.setPutanjaslike(fileToWrite.getPath());
@@ -187,34 +220,52 @@ public class DodavanjeLekcijeManagedBean {
 		}
 	}
 
-	public void popuniListuIzFajla(File folder) {
-		// for (File fileEntry : folder.listFiles()) {
-		// if (fileEntry.isDirectory()) {
-		// popuniListuIzFajla(fileEntry);
-		// } else {
-		// fajlovi.add(fileEntry);
-		// }
-		// }
-		//
-		for (File file2 : fajlovi) {
-			System.out.println("IME: " + file2.getName() + " ZAUZETO: " + file2.getTotalSpace());
+	
+
+	public void ispisOpisa() {
+		System.out.println(" OPIS!" + opisLekcije);
+	}
+
+	public void sacuvajLekicjuZaVideo() {
+		if ((naziv.equals("")) || (videoLink.equals(""))) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('dlg2').show();");
+		} else {
+			System.out.println("NAZIV: "+naziv+"     "+videoLink);
+			Lekcija11 lekcija11 = new Lekcija11();
+			lekcija11.setKurs11(testBaza.findKurs());
+			lekcija11.setTekstlekcije("");
+			lekcija11.setVideolekcije(videoLink);
+			int idLekcije = testBaza.sacuvajLekcijuUBazu(lekcija11);
+			naziv = "";
+			videoLink = "";
 		}
 	}
 
 	public void sacuvajLekciju() {
-		System.out.println("LEKICJA ISPISI" + opisLekcije);
-		if (saSlikom) {
+		if ((opisLekcije.equals("")) || (naziv.equals(""))) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('dlg1').show();");
+		} else {
+			System.out.println("LEKICJA ISPISI" + opisLekcije + "   NAZIV" + naziv);
+
 			Lekcija11 lekcija11 = new Lekcija11();
 			lekcija11.setKurs11(testBaza.findKurs());
 			lekcija11.setTekstlekcije(opisLekcije);
-			lekcija11.setVideolekcije(null);
+			lekcija11.setVideolekcije("");
 			lekcija11.setSlika11s(slike);
 			int idLekcije = testBaza.sacuvajLekcijuUBazu(lekcija11);
 			for (Slika11 slika11 : slike) {
 				slika11.setLekcija11(lekcija11);
 				testBaza.sacuvajSlikuUBazu(slika11);
 			}
+			
+			naziv = "";
+			opisLekcije="";
+			isClicked = false;
+			fajlovi = new ArrayList<>();
+			slike = new ArrayList<>();
+			
 		}
-
 	}
 }

@@ -11,40 +11,45 @@
 <h:body>
 	<h:form>
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<p:outputLabel for="console" value="Basic:" />
+			<p:outputLabel for="console" value="Tip: " />
 			<p:selectOneMenu id="console" value="#{manageBeanLogin.zanimanje}"
 				style="width:125px">
 				<f:selectItem itemLabel="-----select-----" itemValue="#{null}"
-					noSelectionOption="true" selected="selected"/>
+					noSelectionOption="true" selected="selected" />
 				<f:selectItems value="#{manageBeanLogin.zanimanja}" />
 				<f:ajax render="results" />
 			</p:selectOneMenu>
 		</h:panelGrid>
 
 		<h:panelGroup id="results">
-			<h:panelGroup rendered="#{manageBeanLogin.zanimanje eq 'administrator'}">
-				<h:outputLabel value="Username: " />
-				<h:inputText value="#{adminManagedBean.username}" />
-				<h:outputLabel value="Password: " />
-				<h:inputText value="#{adminManagedBean.password}" />
-				<p:commandButton value="Login" actionListener="#{adminManagedBean.login()}" action="/admin.xhtml"></p:commandButton>
-			</h:panelGroup>
-			<h:panelGroup
-				rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
-				<h:outputLabel value="Username: " />
-				<h:inputText value="#{manageBeanLogin.username}" />
-				<h:outputLabel value="Password: " />
-				<h:inputText value="#{manageBeanLogin.password}" />
+			<h:panelGrid columns="2"
+				rendered="#{manageBeanLogin.zanimanje eq 'administrator'}">
+				<p:outputLabel value="Username: " />
+				<p:inputText value="#{adminManagedBean.username}" />
+				<p:outputLabel value="Password: " />
+				<p:password value="#{adminManagedBean.password}" />
+				<p:commandButton value="Login"
+					actionListener="#{adminManagedBean.login()}"></p:commandButton>
+			</h:panelGrid>
+			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
+				<p:outputLabel value="Username: " />
+				<p:inputText value="#{manageBeanLogin.username}" />
+				<p:outputLabel value="Password: " />
+				<p:inputText value="#{manageBeanLogin.password}" />
 				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
-				<h:outputLabel value="Username: " />
-				<h:inputText value="#{manageBeanLogin.username}" />
-				<h:outputLabel value="Password: " />
-				<h:inputText value="#{manageBeanLogin.password}" />
-				<p:commandButton value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
-			</h:panelGroup>
+			</h:panelGrid>
+			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
+				<p:outputLabel value="Username: " />
+				<p:inputText value="#{manageBeanLogin.username}" />
+				<p:outputLabel value="Password: " />
+				<p:inputText value="#{manageBeanLogin.password}" />
+				<p:commandButton  value="Login" action="#{manageBeanLogin.login()}"></p:commandButton>
+			</h:panelGrid>
 		</h:panelGroup>
+		<p:dialog header="GRESKA" widgetVar="dlg1" minHeight="40">
+			<h:outputText  value="Pogresno uneti podaci" />
+		</p:dialog>
 	</h:form>
+
 </h:body>
 </html>

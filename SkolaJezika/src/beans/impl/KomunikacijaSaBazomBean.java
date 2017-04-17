@@ -14,7 +14,7 @@ import entities.Slika11;
  */
 @Stateless
 @LocalBean
-public class TestBazaBean {
+public class KomunikacijaSaBazomBean {
 
 	@PersistenceContext
 	EntityManager em;
@@ -22,7 +22,7 @@ public class TestBazaBean {
     /**
      * Default constructor. 
      */
-    public TestBazaBean() {
+    public KomunikacijaSaBazomBean() {
         // TODO Auto-generated constructor stub
     }
 
