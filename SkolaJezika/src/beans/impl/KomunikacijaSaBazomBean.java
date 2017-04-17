@@ -1,12 +1,17 @@
 package beans.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import entities.Kurs11;
 import entities.Lekcija11;
+import entities.Predavac11;
 import entities.Slika11;
 
 /**
@@ -46,4 +51,23 @@ public class KomunikacijaSaBazomBean {
     	return idLekcije;
     }
     
+	public List<Kurs11> vratiSveKurseve() {
+		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAll", Kurs11.class);
+		List<Kurs11> kursevi = q.getResultList();
+	
+		if (kursevi != null)
+			return kursevi;
+		else
+			return new ArrayList<>();
+	}
+
+	public List<Predavac11> vratiSvePredavace() {
+		TypedQuery<Predavac11> q = em.createNamedQuery("Predavac11.findAll", Predavac11.class);
+		List<Predavac11> predavaci = q.getResultList();
+	
+		if (predavaci != null)
+			return predavaci;
+		else
+			return new ArrayList<>();
+	}
 }

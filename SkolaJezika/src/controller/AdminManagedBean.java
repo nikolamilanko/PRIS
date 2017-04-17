@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import beans.AdministratorBeanRemote;
-import beans.BazaBeanRemote;
+import beans.impl.KomunikacijaSaBazomBean;
 import entities.Kurs11;
 import entities.Predavac11;
 
@@ -29,7 +29,7 @@ public class AdminManagedBean {
 	AdministratorBeanRemote adminBR;
 	
 	@EJB
-	BazaBeanRemote bazaBR;
+	KomunikacijaSaBazomBean bazaBR;
 
 	public void onLoad() {
 		kursevi = bazaBR.vratiSveKurseve();
@@ -80,7 +80,7 @@ public class AdminManagedBean {
 		this.kursevi = kursevi;
 	}
 
-	public BazaBeanRemote getBazaBR() {
+	public KomunikacijaSaBazomBean getBazaBR() {
 		return bazaBR;
 	}
 	
