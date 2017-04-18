@@ -65,7 +65,7 @@
 				<h:outputLabel for="password" value="Password: " />
 				<p:password id="password" value="#{dodavanjePredavacaMB.password}"
 					match="potvrda" label="password" required="true" feedback="true"
-					validatorMessage="Password can only contain upper and lower case letters and numbers." />
+					validatorMessage="Password mora imati izmedju 1 i 20 karaktera i moze da sadrzi samo mala i velika slova i brojeve." />
 				<p:message for="password" />
 
 				<h:outputLabel for="potvrda" value="Potvrdi password: " />
@@ -85,14 +85,14 @@
 				modal="true" height="100" responsive="true">
 				<h:panelGrid columns="1" cellpadding="5" cellspacing="5">
 					<h:outputText value="Uspesno dodavanje!" />
-					<p:button value="OK" outcome="/admin.xhtml" />
+					<p:button value="OK" />
 				</h:panelGrid>
 			</p:dialog>
 
 			<p:dialog header="Dodavanje predavaca" widgetVar="dlgNeuspesno"
 				modal="true" height="100" responsive="true">
 				<h:panelGrid columns="1" cellpadding="5" cellspacing="5" >
-					<h:outputText value="Dodavanje nije uspelo!" />
+					<h:outputText value="Username je zauzet, unesite drugi!" />
 					<p:button value="OK" />
 				</h:panelGrid>
 			</p:dialog>

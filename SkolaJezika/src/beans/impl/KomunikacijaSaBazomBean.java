@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Kurs11;
 import entities.Lekcija11;
+import entities.Logovanje11;
 import entities.Predavac11;
 import entities.Slika11;
 
@@ -69,5 +70,17 @@ public class KomunikacijaSaBazomBean {
 			return predavaci;
 		else
 			return new ArrayList<>();
+	}
+	
+	public boolean izmeniPassword(int idLogovanja, String noviPassword) {
+		try {
+			Logovanje11 l = (Logovanje11) em.find(Logovanje11.class, idLogovanja);
+			l.setPassword(noviPassword);
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

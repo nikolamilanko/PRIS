@@ -4,30 +4,43 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 
 import beans.AdministratorBeanRemote;
 import beans.impl.KomunikacijaSaBazomBean;
 import entities.Kurs11;
 import entities.Predavac11;
 
-@ManagedBean(name="adminMB")
+@ManagedBean(name = "adminMB")
 @SessionScoped
 public class AdminManagedBean {
 	private String username;
 	private String password;
-	
+
+	private String stariPassword;
+
+	@Pattern(regexp = "^[a-zA-Z0-9]*$")
+	@Size(min = 1, max = 20)
+	private String noviPassword;
+	private String potvrdaNovogPassworda;
+
+	private Predavac11 selektovaniPredavac;
+
 	private List<Kurs11> kursevi;
 	private List<Predavac11> predavaci;
 
 	@EJB
 	AdministratorBeanRemote adminBR;
-	
+
 	@EJB
 	KomunikacijaSaBazomBean bazaBR;
 
@@ -83,7 +96,39 @@ public class AdminManagedBean {
 	public KomunikacijaSaBazomBean getBazaBR() {
 		return bazaBR;
 	}
-	
+
+	public Predavac11 getSelektovaniPredavac() {
+		return selektovaniPredavac;
+	}
+
+	public void setSelektovaniPredavac(Predavac11 selektovaniPredavac) {
+		this.selektovaniPredavac = selektovaniPredavac;
+	}
+
+	public String getNoviPassword() {
+		return noviPassword;
+	}
+
+	public void setNoviPassword(String noviPassword) {
+		this.noviPassword = noviPassword;
+	}
+
+	public String getPotvrdaNovogPassworda() {
+		return potvrdaNovogPassworda;
+	}
+
+	public void setPotvrdaNovogPassworda(String potvrdaNovogPassworda) {
+		this.potvrdaNovogPassworda = potvrdaNovogPassworda;
+	}
+
+	public String getStariPassword() {
+		return stariPassword;
+	}
+
+	public void setStariPassword(String stariPassword) {
+		this.stariPassword = stariPassword;
+	}
+
 	public void login() {
 
 		if (adminBR.login(username, password)) {
@@ -94,27 +139,45 @@ public class AdminManagedBean {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else{
+		} else {
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('dlg1').show();");
-			username ="";
-			password= "";
+			username = "";
+			password = "";
 		}
-	
-	}
-	
-	public String logout() {
-		((HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-		         .getSession(false)).invalidate();
-        return "/home.xhtml?faces-redirect=true";
-    }
 
-//	public void ispisi() {
-//		System.out.println("ADMIN ISPISI");
-//		System.out.println(abr.getAdministrator().getImeadmin());
-//		FacesContext context = FacesContext.getCurrentInstance();
-//		context.getExternalContext().getSessionMap().get("test");
-//		System.out.println(context);
-//		System.out.println(context.getExternalContext().getSessionMap().get("test"));
-//	}
+	}
+
+	public String logout() {
+		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+		return "/home.xhtml?faces-redirect=true";
+	}
+
+	public void izmeniPredavaca(RowEditEvent event) {
+		if (!adminBR.izmeniPredavaca((Predavac11) event.getObject())) {
+			FacesMessage msg = new FacesMessage("Doslo je do greske prilikom izmene predavaca!");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	public void izbrisiPredavaca() {
+		if (!adminBR.izbrisiPredavaca(selektovaniPredavac)) {
+			FacesMessage msg = new FacesMessage("Doslo je do greske prilikom brisanja predavaca!");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	public void izmeniPassword() {
+		if (stariPassword.equals(password)) {
+			if (!bazaBR.izmeniPassword(adminBR.getAdministrator().getIdlogovanja(), noviPassword)) {
+				FacesMessage msg = new FacesMessage("Doslo je do greske prilikom cuvanje novog passworda!");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			} else {
+				RequestContext.getCurrentInstance().execute("PF('dlgIzmenaPassworda').hide()");
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Niste dobro uneli stari password!");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
 }

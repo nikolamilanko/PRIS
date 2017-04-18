@@ -28,6 +28,7 @@ public class DodavanjePredavacaManagedBean {
 	private String username;
 
 	@Pattern(regexp = "^[a-zA-Z0-9]*$")
+	@Size(min=1, max=20)
 	private String password;
 
 	private String potvrdiPassword;
@@ -103,6 +104,6 @@ public class DodavanjePredavacaManagedBean {
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('dlgNeuspesno').show();");
 		}
-
 	}
+	
 }

@@ -19,13 +19,13 @@ import entities.Predavac11;
 public class AdministratorBean implements AdministratorBeanRemote {
 
 	private Administrator11 administrator;
-	
+
 	@PersistenceContext
 	EntityManager em;
-	
-    public AdministratorBean() {
-        // TODO Auto-generated constructor stub
-    }
+
+	public AdministratorBean() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean login(String username, String password) {
@@ -44,7 +44,7 @@ public class AdministratorBean implements AdministratorBeanRemote {
 			return false;
 		}
 	}
-	
+
 	public Administrator11 getAdministrator() {
 		return administrator;
 	}
@@ -54,29 +54,26 @@ public class AdministratorBean implements AdministratorBeanRemote {
 	}
 
 	@Override
-	public boolean dodajPredavaca(String ime, String prezime, String titula, String email, String username, String password) {
+	public boolean dodajPredavaca(String ime, String prezime, String titula, String email, String username,
+			String password) {
 		// TODO Auto-generated method stub
-		try {
-			Predavac11 p = new Predavac11();
-			p.setImepredavaca(ime);
-			p.setPrezimepredavaca(prezime);
-			p.setEmailpredavaca(email);
-			p.setTitula(titula);
-			Logovanje11 log;
-			if ((log = dodajLogovanje(username, password)) != null)
-				p.setLogovanje11(log);
-			else
-				return false;
-			em.persist(p);
-			
-			return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Predavac11 p = new Predavac11();
+		p.setImepredavaca(ime);
+		p.setPrezimepredavaca(prezime);
+		p.setEmailpredavaca(email);
+		p.setTitula(titula);
+		
+		Logovanje11 log;
+		if ((log = dodajLogovanje(username, password)) != null)
+			p.setLogovanje11(log);
+		else
 			return false;
-		}
+		
+		em.persist(p);
+
+		return true;
 	}
-	
+
 	private Logovanje11 dodajLogovanje(String username, String password) {
 		try {
 			if (postojiUsername(username))
@@ -90,7 +87,7 @@ public class AdministratorBean implements AdministratorBeanRemote {
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			// e.printStackTrace();
 			return null;
 		}
 	}
@@ -104,12 +101,46 @@ public class AdministratorBean implements AdministratorBeanRemote {
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
 	}
 
-	
-	
-	
+	@Override
+	public boolean izmeniPredavaca(Predavac11 predavac) {
+		// TODO Auto-generated method stub
+		try {
+			Predavac11 p = (Predavac11) em.find(Predavac11.class, predavac.getIdpredavaca());
+			this.dodeliVrednostiPredavacu(p, predavac);
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void dodeliVrednostiPredavacu(Predavac11 p1, Predavac11 p2) {
+		p1.setImepredavaca(p2.getImepredavaca());
+		p1.setPrezimepredavaca(p2.getPrezimepredavaca());
+		p1.setEmailpredavaca(p2.getEmailpredavaca());
+		p1.setTitula(p2.getTitula());
+	}
+
+	@Override
+	public boolean izbrisiPredavaca(Predavac11 predavac) {
+		// TODO Auto-generated method stub
+		try {
+			Predavac11 p = (Predavac11) em.find(Predavac11.class, predavac.getIdpredavaca());
+			Logovanje11 l = (Logovanje11) em.find(Logovanje11.class, p.getLogovanje11().getIdlogovanja());
+			em.remove(p);
+			em.remove(l);
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
