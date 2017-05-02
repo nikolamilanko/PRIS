@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Pattern;
@@ -134,7 +135,8 @@ public class AdminManagedBean {
 		if (adminBR.login(username, password)) {
 
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext(); 
+				ec.redirect(ec.getRequestContextPath() + "/page-admin/admin.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -150,7 +152,7 @@ public class AdminManagedBean {
 
 	public String logout() {
 		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
-		return "/home.xhtml?faces-redirect=true";
+		return "/page-svi/home.xhtml?faces-redirect=true";
 	}
 
 	public void izmeniPredavaca(RowEditEvent event) {

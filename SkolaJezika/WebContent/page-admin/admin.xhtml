@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style type="text/css">
+#myform {
+	margin-top: 5em;
+	margin-left: 5em;
+	margin-right: 5em;
+}
+
+#mydiv {
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin-bottom: 1em;
+}
+</style>
+
+</h:head>
+
+<h:body>
+	<f:view>
+
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{adminMB.onLoad}" />
+		</f:metadata>
+
+		<h:form id="myform">
+
+			<p:commandButton immediate="true" value="Logout"
+				action="#{adminMB.logout()}" />
+
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:panelGrid>
+
+				<p:row>
+					<p:column>
+						<p:dataTable id="kursTable" var="kurs" value="#{adminMB.kursevi}"
+							scrollable="true">
+							<f:facet name="header">
+            					Svi kursevi
+        					</f:facet>
+
+							<p:column headerText="ID">
+								<h:outputText value="#{kurs.idkursa}" />
+							</p:column>
+
+							<p:column headerText="Naziv">
+								<h:outputText value="#{kurs.nazivkursa}" />
+							</p:column>
+
+							<p:column headerText="Datum pocetka">
+								<h:outputText value="#{kurs.datumpocetka}" />
+							</p:column>
+
+							<p:column headerText="Datum kraja">
+								<h:outputText value="#{kurs.datumkraja}" />
+							</p:column>
+
+							<p:column headerText="Predavac">
+								<h:outputText
+									value="#{kurs.predavac11.imepredavaca} #{kurs.predavac11.prezimepredavaca}" />
+							</p:column>
+
+							<p:column headerText="Potrebni poeni">
+								<h:outputText value="#{kurs.potrebnipoeni}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+
+					<p:column>
+						<h:button value="Dodaj novi kurs" outcome="dodavanjeKursa.xhtml"
+							style="width:150px;" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column colspan="2" styleClass="ui-widget-row">
+						<p:spacer height="100" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<p:dataTable id="predavacTable" var="predavac"
+							value="#{adminMB.predavaci}" scrollable="true" editable="true"
+							rowKey="#{predavac.idpredavaca}"
+							selection="#{adminMB.selektovaniPredavac}" selectionMode="single">
+
+							<f:facet name="header">
+            					Svi predavaci
+        					</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{adminMB.izmeniPredavaca}"
+								update=":myform:msgs" />
+
+							<p:column headerText="ID">
+								<h:outputText value="#{predavac.idpredavaca}" />
+							</p:column>
+
+							<p:column headerText="Ime">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{predavac.imepredavaca}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="imePredavaca"
+											value="#{predavac.imepredavaca}" style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Prezime">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{predavac.prezimepredavaca}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="prezimePredavaca"
+											value="#{predavac.prezimepredavaca}" style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Titula">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{predavac.titula}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="titulaPredavaca" value="#{predavac.titula}"
+											style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Email">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{predavac.emailpredavaca}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="emailPredavaca"
+											value="#{predavac.emailpredavaca}" style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="width:32px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+
+						<p:contextMenu for="predavacTable">
+							<p:menuitem value="Delete" update="predavacTable :myform:msgs"
+								icon="ui-icon-close"
+								actionListener="#{adminMB.izbrisiPredavaca}" />
+						</p:contextMenu>
+					</p:column>
+
+					<p:column>
+						<h:button value="Dodaj novog predavaca"
+							outcome="dodavanjePredavaca.xhtml" style="width:150px;" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column style="text-align: center;">
+						<h:outputText
+							value="Ako zelite da promenite lozinku pritisnite dugme 'Promena
+						lozinke'" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<p:commandButton value="Promena lozinke"
+							onclick="PF('dlgIzmenaPassworda').show();"
+							style="width:150px; display: block; margin: 0px auto;" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+
+		</h:form>
+
+		<h:form id="dialogForm">
+			<p:dialog header="Izmena passworda" widgetVar="dlgIzmenaPassworda"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="izmenaPassworda" style="text-align:center;">
+					<h:outputText value="Unesite stari i novi password:" />
+
+					<p:separator />
+
+					<p:panelGrid columns="2" columnClasses="label,value">
+
+						<h:outputLabel for="stariPassword" value="Stari password:" />
+						<p:password id="stariPassword" value="#{adminMB.stariPassword}"
+							label="stari password" required="true" />
+
+						<h:outputLabel for="password" value="Novi password: " />
+						<p:password id="password" value="#{adminMB.noviPassword}"
+							match="potvrda" label="password" required="true" feedback="true"
+							validatorMessage="Password mora imati izmedju 1 i 20 karaktera i moze da sadrzi samo mala i velika slova i brojeve." />
+
+						<h:outputLabel for="potvrda" value="Potvrdi novi password: " />
+						<p:password id="potvrda" value="#{adminMB.potvrdaNovogPassworda}"
+							label="potvrdi password" required="true" />
+
+						<p:commandButton value="Sacuvaj"
+							actionListener="#{adminMB.izmeniPassword}"
+							update="izmenaPassworda :myform:msgs" validateClient="true" />
+						<p:button value="Nazad" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</f:view>
+</h:body>
+</html>
