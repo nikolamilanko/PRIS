@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -44,14 +43,10 @@ public class AdminManagedBean {
 
 	@EJB
 	KomunikacijaSaBazomBean bazaBR;
-
+	
 	public void onLoad() {
 		kursevi = bazaBR.vratiSveKurseve();
 		predavaci = bazaBR.vratiSvePredavace();
-	}
-
-	public AdminManagedBean() {
-
 	}
 
 	public List<Predavac11> getPredavaci() {
@@ -148,11 +143,6 @@ public class AdminManagedBean {
 			password = "";
 		}
 
-	}
-
-	public String logout() {
-		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
-		return "/page-svi/home.xhtml?faces-redirect=true";
 	}
 
 	public void izmeniPredavaca(RowEditEvent event) {

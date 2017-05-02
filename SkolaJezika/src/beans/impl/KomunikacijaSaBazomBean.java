@@ -61,6 +61,17 @@ public class KomunikacijaSaBazomBean {
 		else
 			return new ArrayList<>();
 	}
+	
+	public List<Kurs11> vratiSveKurseveZaUsernamePredavaca(String username) {
+		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAllZaUsernamePredavaca", Kurs11.class);
+		q.setParameter("username", username);
+		List<Kurs11> kursevi = q.getResultList();
+	
+		if (kursevi != null)
+			return kursevi;
+		else
+			return new ArrayList<>();
+	}
 
 	public List<Predavac11> vratiSvePredavace() {
 		TypedQuery<Predavac11> q = em.createNamedQuery("Predavac11.findAll", Predavac11.class);

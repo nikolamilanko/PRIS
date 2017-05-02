@@ -5,19 +5,21 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the KURS11 database table.
  * 
  */
 @Entity
-@NamedQuery(name="Kurs11.findAll", query="SELECT k FROM Kurs11 k")
-@Table(name="KURS11")
+@NamedQueries({ 
+		@NamedQuery(name = "Kurs11.findAll", query = "SELECT k FROM Kurs11 k"),
+		@NamedQuery(name = "Kurs11.findAllZaUsernamePredavaca", query = "SELECT k FROM Kurs11 k WHERE k.predavac11.logovanje11.idlogovanja=(SELECT l.idlogovanja FROM Logovanje11 l WHERE l.username=:username)")
+})
+@Table(name = "KURS11")
 public class Kurs11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idkursa;
 
 	@Temporal(TemporalType.DATE)
@@ -32,21 +34,21 @@ public class Kurs11 implements Serializable {
 
 	private int potrebnipoeni;
 
-	//bi-directional many-to-one association to Ishod11
-	@OneToMany(mappedBy="kurs11")
+	// bi-directional many-to-one association to Ishod11
+	@OneToMany(mappedBy = "kurs11")
 	private List<Ishod11> ishod11s;
 
-	//bi-directional many-to-one association to Komentar11
-	@OneToMany(mappedBy="kurs11")
+	// bi-directional many-to-one association to Komentar11
+	@OneToMany(mappedBy = "kurs11")
 	private List<Komentar11> komentar11s;
 
-	//bi-directional many-to-one association to Predavac11
+	// bi-directional many-to-one association to Predavac11
 	@ManyToOne
-	@JoinColumn(name="IDPREDAVACA")
+	@JoinColumn(name = "IDPREDAVACA")
 	private Predavac11 predavac11;
 
-	//bi-directional many-to-one association to Lekcija11
-	@OneToMany(mappedBy="kurs11")
+	// bi-directional many-to-one association to Lekcija11
+	@OneToMany(mappedBy = "kurs11")
 	private List<Lekcija11> lekcija11s;
 
 	public Kurs11() {
