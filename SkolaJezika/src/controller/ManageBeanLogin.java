@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,32 +15,36 @@ import beans.impl.KomunikacijaSaBazomBean;
 import entities.Kurs11;
 import entities.Predavac11;
 
-@ManagedBean(name="manageBeanLogin")
+@ManagedBean(name = "manageBeanLogin")
 @ApplicationScoped
 public class ManageBeanLogin {
-	
+
 	private String zanimanje;
 	private String username;
 	private String password;
 
+	private Date datumPocetka;
+	private Date datumKraja;
 
 	private List<Kurs11> kursevi;
+	private List<Kurs11> filtriraniKursevi;
+
 	private List<Predavac11> predavaci;
 	private List<String> zanimanja;
-	
+
 	@EJB
 	KomunikacijaSaBazomBean bazaBR;
-	
-	public void onLoad() {
+
+	public void onLoadZaAdministratora() {
 		kursevi = bazaBR.vratiSveKurseve();
 		predavaci = bazaBR.vratiSvePredavace();
 	}
-	
+
 	public void onLoadZaPredavaca(String username) {
 		kursevi = bazaBR.vratiSveKurseveZaUsernamePredavaca(username);
 		predavaci = bazaBR.vratiSvePredavace();
 	}
-	
+
 	@PostConstruct
 	private void init() {
 		zanimanja = new ArrayList<>();
@@ -54,6 +59,14 @@ public class ManageBeanLogin {
 
 	public void setKursevi(List<Kurs11> kursevi) {
 		this.kursevi = kursevi;
+	}
+
+	public List<Kurs11> getFiltriraniKursevi() {
+		return filtriraniKursevi;
+	}
+
+	public void setFiltriraniKursevi(List<Kurs11> filtriraniKursevi) {
+		this.filtriraniKursevi = filtriraniKursevi;
 	}
 
 	public List<Predavac11> getPredavaci() {
@@ -95,9 +108,25 @@ public class ManageBeanLogin {
 	public void setZanimanja(List<String> zanimanja) {
 		this.zanimanja = zanimanja;
 	}
-	
+
+	public Date getDatumPocetka() {
+		return datumPocetka;
+	}
+
+	public void setDatumPocetka(Date datumPocetka) {
+		this.datumPocetka = datumPocetka;
+	}
+
+	public Date getDatumKraja() {
+		return datumKraja;
+	}
+
+	public void setDatumKraja(Date datumKraja) {
+		this.datumKraja = datumKraja;
+	}
+
 	public String logout() {
 		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
-		return "/page-svi/home.xhtml?faces-redirect=true";
+		return "/page-svi/login.xhtml?faces-redirect=true";
 	}
 }
