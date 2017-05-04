@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Odgovor11.findAll", query="SELECT o FROM Odgovor11 o")
+@Table(name="ODGOVOR11")
 public class Odgovor11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,7 +18,7 @@ public class Odgovor11 implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idodgovora;
 
-	private byte jetacan;
+	private String obelezeniiodogovara;
 
 	private String tekstodgovora;
 
@@ -25,6 +26,11 @@ public class Odgovor11 implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="IDPITANJA")
 	private Pitanje11 pitanje11;
+
+	//bi-directional many-to-one association to Polaznik11
+	@ManyToOne
+	@JoinColumn(name="IDPOLAZNIKA")
+	private Polaznik11 polaznik11;
 
 	public Odgovor11() {
 	}
@@ -37,12 +43,12 @@ public class Odgovor11 implements Serializable {
 		this.idodgovora = idodgovora;
 	}
 
-	public byte getJetacan() {
-		return this.jetacan;
+	public String getObelezeniiodogovara() {
+		return this.obelezeniiodogovara;
 	}
 
-	public void setJetacan(byte jetacan) {
-		this.jetacan = jetacan;
+	public void setObelezeniiodogovara(String obelezeniiodogovara) {
+		this.obelezeniiodogovara = obelezeniiodogovara;
 	}
 
 	public String getTekstodgovora() {
@@ -59,6 +65,14 @@ public class Odgovor11 implements Serializable {
 
 	public void setPitanje11(Pitanje11 pitanje11) {
 		this.pitanje11 = pitanje11;
+	}
+
+	public Polaznik11 getPolaznik11() {
+		return this.polaznik11;
+	}
+
+	public void setPolaznik11(Polaznik11 polaznik11) {
+		this.polaznik11 = polaznik11;
 	}
 
 }

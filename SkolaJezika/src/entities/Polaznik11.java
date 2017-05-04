@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Polaznik11.findAll", query="SELECT p FROM Polaznik11 p")
+@Table(name="POLAZNIK11")
 public class Polaznik11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,9 +29,17 @@ public class Polaznik11 implements Serializable {
 
 	private String prezimepolaznika;
 
+	//bi-directional many-to-one association to Ishod11
+	@OneToMany(mappedBy="polaznik11")
+	private List<Ishod11> ishod11s;
+
 	//bi-directional many-to-one association to Komentar11
 	@OneToMany(mappedBy="polaznik11")
 	private List<Komentar11> komentar11s;
+
+	//bi-directional many-to-one association to Odgovor11
+	@OneToMany(mappedBy="polaznik11")
+	private List<Odgovor11> odgovor11s;
 
 	//bi-directional many-to-one association to Logovanje11
 	@ManyToOne
@@ -84,6 +93,28 @@ public class Polaznik11 implements Serializable {
 		this.prezimepolaznika = prezimepolaznika;
 	}
 
+	public List<Ishod11> getIshod11s() {
+		return this.ishod11s;
+	}
+
+	public void setIshod11s(List<Ishod11> ishod11s) {
+		this.ishod11s = ishod11s;
+	}
+
+	public Ishod11 addIshod11(Ishod11 ishod11) {
+		getIshod11s().add(ishod11);
+		ishod11.setPolaznik11(this);
+
+		return ishod11;
+	}
+
+	public Ishod11 removeIshod11(Ishod11 ishod11) {
+		getIshod11s().remove(ishod11);
+		ishod11.setPolaznik11(null);
+
+		return ishod11;
+	}
+
 	public List<Komentar11> getKomentar11s() {
 		return this.komentar11s;
 	}
@@ -104,6 +135,28 @@ public class Polaznik11 implements Serializable {
 		komentar11.setPolaznik11(null);
 
 		return komentar11;
+	}
+
+	public List<Odgovor11> getOdgovor11s() {
+		return this.odgovor11s;
+	}
+
+	public void setOdgovor11s(List<Odgovor11> odgovor11s) {
+		this.odgovor11s = odgovor11s;
+	}
+
+	public Odgovor11 addOdgovor11(Odgovor11 odgovor11) {
+		getOdgovor11s().add(odgovor11);
+		odgovor11.setPolaznik11(this);
+
+		return odgovor11;
+	}
+
+	public Odgovor11 removeOdgovor11(Odgovor11 odgovor11) {
+		getOdgovor11s().remove(odgovor11);
+		odgovor11.setPolaznik11(null);
+
+		return odgovor11;
 	}
 
 	public Logovanje11 getLogovanje11() {

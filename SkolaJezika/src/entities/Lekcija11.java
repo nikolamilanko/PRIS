@@ -19,6 +19,9 @@ public class Lekcija11 implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idlekcije;
 
+	private String nazivlekcije;
+
+	@Lob
 	private String tekstlekcije;
 
 	private String videolekcije;
@@ -45,6 +48,14 @@ public class Lekcija11 implements Serializable {
 
 	public void setIdlekcije(int idlekcije) {
 		this.idlekcije = idlekcije;
+	}
+
+	public String getNazivlekcije() {
+		return this.nazivlekcije;
+	}
+
+	public void setNazivlekcije(String nazivlekcije) {
+		this.nazivlekcije = nazivlekcije;
 	}
 
 	public String getTekstlekcije() {

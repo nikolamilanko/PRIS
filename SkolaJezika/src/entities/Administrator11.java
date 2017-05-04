@@ -20,11 +20,14 @@ public class Administrator11 implements Serializable {
 
 	private String emailadmin;
 
-	private int idlogovanja;
-
 	private String imeadmin;
 
 	private String prezimeadmin;
+
+	//bi-directional many-to-one association to Logovanje11
+	@ManyToOne
+	@JoinColumn(name="IDLOGOVANJA")
+	private Logovanje11 logovanje11;
 
 	public Administrator11() {
 	}
@@ -45,14 +48,6 @@ public class Administrator11 implements Serializable {
 		this.emailadmin = emailadmin;
 	}
 
-	public int getIdlogovanja() {
-		return this.idlogovanja;
-	}
-
-	public void setIdlogovanja(int idlogovanja) {
-		this.idlogovanja = idlogovanja;
-	}
-
 	public String getImeadmin() {
 		return this.imeadmin;
 	}
@@ -67,6 +62,14 @@ public class Administrator11 implements Serializable {
 
 	public void setPrezimeadmin(String prezimeadmin) {
 		this.prezimeadmin = prezimeadmin;
+	}
+
+	public Logovanje11 getLogovanje11() {
+		return this.logovanje11;
+	}
+
+	public void setLogovanje11(Logovanje11 logovanje11) {
+		this.logovanje11 = logovanje11;
 	}
 
 }

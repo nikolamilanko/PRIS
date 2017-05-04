@@ -25,6 +25,8 @@ public class Test11 implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datumtesta;
 
+	private String naslovtesta;
+
 	//bi-directional many-to-one association to Pitanje11
 	@OneToMany(mappedBy="test11")
 	private List<Pitanje11> pitanje11s;
@@ -63,6 +65,14 @@ public class Test11 implements Serializable {
 
 	public void setDatumtesta(Date datumtesta) {
 		this.datumtesta = datumtesta;
+	}
+
+	public String getNaslovtesta() {
+		return this.naslovtesta;
+	}
+
+	public void setNaslovtesta(String naslovtesta) {
+		this.naslovtesta = naslovtesta;
 	}
 
 	public List<Pitanje11> getPitanje11s() {

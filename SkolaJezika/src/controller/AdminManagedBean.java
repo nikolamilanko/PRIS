@@ -161,7 +161,7 @@ public class AdminManagedBean {
 
 	public void izmeniPassword() {
 		if (stariPassword.equals(password)) {
-			if (!bazaBR.izmeniPassword(adminBR.getAdministrator().getIdlogovanja(), noviPassword)) {
+			if (!bazaBR.izmeniPassword(adminBR.getAdministrator().getLogovanje11().getIdlogovanja(), noviPassword)) {
 				FacesMessage msg = new FacesMessage("Doslo je do greske prilikom cuvanje novog passworda!");
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			} else {

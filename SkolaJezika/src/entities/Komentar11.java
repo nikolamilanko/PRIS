@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @NamedQuery(name="Komentar11.findAll", query="SELECT k FROM Komentar11 k")
+@Table(name="KOMENTAR11")
 public class Komentar11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,15 +24,15 @@ public class Komentar11 implements Serializable {
 
 	private String tekstkomentara;
 
-	//bi-directional many-to-one association to Polaznik11
-	@ManyToOne
-	@JoinColumn(name="IDPOLAZNIKA")
-	private Polaznik11 polaznik11;
-
 	//bi-directional many-to-one association to Kurs11
 	@ManyToOne
 	@JoinColumn(name="IDKURSA")
 	private Kurs11 kurs11;
+
+	//bi-directional many-to-one association to Polaznik11
+	@ManyToOne
+	@JoinColumn(name="IDPOLAZNIKA")
+	private Polaznik11 polaznik11;
 
 	public Komentar11() {
 	}
@@ -60,20 +61,20 @@ public class Komentar11 implements Serializable {
 		this.tekstkomentara = tekstkomentara;
 	}
 
-	public Polaznik11 getPolaznik11() {
-		return this.polaznik11;
-	}
-
-	public void setPolaznik11(Polaznik11 polaznik11) {
-		this.polaznik11 = polaznik11;
-	}
-
 	public Kurs11 getKurs11() {
 		return this.kurs11;
 	}
 
 	public void setKurs11(Kurs11 kurs11) {
 		this.kurs11 = kurs11;
+	}
+
+	public Polaznik11 getPolaznik11() {
+		return this.polaznik11;
+	}
+
+	public void setPolaznik11(Polaznik11 polaznik11) {
+		this.polaznik11 = polaznik11;
 	}
 
 }

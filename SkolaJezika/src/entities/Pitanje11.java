@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Pitanje11.findAll", query="SELECT p FROM Pitanje11 p")
+@Table(name="PITANJE11")
 public class Pitanje11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +19,9 @@ public class Pitanje11 implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idpitanja;
 
-	private int brpitanja;
+	private String brojevitacknihodogovra;
+
+	private String tekstoviodgovora;
 
 	private String tekstpitanja;
 
@@ -42,12 +45,20 @@ public class Pitanje11 implements Serializable {
 		this.idpitanja = idpitanja;
 	}
 
-	public int getBrpitanja() {
-		return this.brpitanja;
+	public String getBrojevitacknihodogovra() {
+		return this.brojevitacknihodogovra;
 	}
 
-	public void setBrpitanja(int brpitanja) {
-		this.brpitanja = brpitanja;
+	public void setBrojevitacknihodogovra(String brojevitacknihodogovra) {
+		this.brojevitacknihodogovra = brojevitacknihodogovra;
+	}
+
+	public String getTekstoviodgovora() {
+		return this.tekstoviodgovora;
+	}
+
+	public void setTekstoviodgovora(String tekstoviodgovora) {
+		this.tekstoviodgovora = tekstoviodgovora;
 	}
 
 	public String getTekstpitanja() {
