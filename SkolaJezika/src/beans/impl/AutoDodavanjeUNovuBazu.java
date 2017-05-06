@@ -14,6 +14,7 @@ import entities.Kurs11;
 import entities.Lekcija11;
 import entities.Logovanje11;
 import entities.Odgovor11;
+import entities.Odgovornapitanj11;
 import entities.Pitanje11;
 import entities.Polaznik11;
 import entities.Predavac11;
@@ -134,9 +135,13 @@ public class AutoDodavanjeUNovuBazu {
 		Pitanje11 pitanje11 = new Pitanje11();
 		pitanje11.setTest11(test11);
 		pitanje11.setTekstpitanja("tekst");
-		pitanje11.setTekstoviodgovora("tekstovi odgovra");
-		pitanje11.setBrojevitacknihodogovra("1,2,3");
 		em.persist(pitanje11);
+		//dodavanje odgovora na pitanje
+		Odgovornapitanj11 odgovornapitanj11 = new Odgovornapitanj11();
+		odgovornapitanj11.setJetacan(jePolozio);
+		odgovornapitanj11.setPitanje11(pitanje11);
+		odgovornapitanj11.setTekstodgovora("tekst odgovora");
+		em.persist(odgovornapitanj11);
 		// dodavanje odgovora
 		System.out.println(13);
 		Odgovor11 odgovor11 = new Odgovor11();

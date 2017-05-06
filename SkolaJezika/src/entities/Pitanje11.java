@@ -19,15 +19,15 @@ public class Pitanje11 implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idpitanja;
 
-	private String brojevitacknihodogovra;
-
-	private String tekstoviodgovora;
-
 	private String tekstpitanja;
 
 	//bi-directional many-to-one association to Odgovor11
 	@OneToMany(mappedBy="pitanje11")
 	private List<Odgovor11> odgovor11s;
+
+	//bi-directional many-to-one association to Odgovornapitanj11
+	@OneToMany(mappedBy="pitanje11")
+	private List<Odgovornapitanj11> odgovornapitanj11s;
 
 	//bi-directional many-to-one association to Test11
 	@ManyToOne
@@ -43,22 +43,6 @@ public class Pitanje11 implements Serializable {
 
 	public void setIdpitanja(int idpitanja) {
 		this.idpitanja = idpitanja;
-	}
-
-	public String getBrojevitacknihodogovra() {
-		return this.brojevitacknihodogovra;
-	}
-
-	public void setBrojevitacknihodogovra(String brojevitacknihodogovra) {
-		this.brojevitacknihodogovra = brojevitacknihodogovra;
-	}
-
-	public String getTekstoviodgovora() {
-		return this.tekstoviodgovora;
-	}
-
-	public void setTekstoviodgovora(String tekstoviodgovora) {
-		this.tekstoviodgovora = tekstoviodgovora;
 	}
 
 	public String getTekstpitanja() {
@@ -89,6 +73,28 @@ public class Pitanje11 implements Serializable {
 		odgovor11.setPitanje11(null);
 
 		return odgovor11;
+	}
+
+	public List<Odgovornapitanj11> getOdgovornapitanj11s() {
+		return this.odgovornapitanj11s;
+	}
+
+	public void setOdgovornapitanj11s(List<Odgovornapitanj11> odgovornapitanj11s) {
+		this.odgovornapitanj11s = odgovornapitanj11s;
+	}
+
+	public Odgovornapitanj11 addOdgovornapitanj11(Odgovornapitanj11 odgovornapitanj11) {
+		getOdgovornapitanj11s().add(odgovornapitanj11);
+		odgovornapitanj11.setPitanje11(this);
+
+		return odgovornapitanj11;
+	}
+
+	public Odgovornapitanj11 removeOdgovornapitanj11(Odgovornapitanj11 odgovornapitanj11) {
+		getOdgovornapitanj11s().remove(odgovornapitanj11);
+		odgovornapitanj11.setPitanje11(null);
+
+		return odgovornapitanj11;
 	}
 
 	public Test11 getTest11() {
