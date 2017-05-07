@@ -12,8 +12,11 @@ import javax.persistence.TypedQuery;
 import entities.Kurs11;
 import entities.Lekcija11;
 import entities.Logovanje11;
+import entities.Odgovornapitanje11;
+import entities.Pitanje11;
 import entities.Predavac11;
 import entities.Slika11;
+import entities.Test11;
 
 /**
  * Session Bean implementation class TestBazaBean
@@ -93,5 +96,19 @@ public class KomunikacijaSaBazomBean {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void savePitanje(Pitanje11 pitanje11){
+		em.persist(pitanje11);
+	}
+	
+	public void saveOdgovorNaPitanje(Odgovornapitanje11 odgovornapitanje11){
+		em.persist(odgovornapitanje11);
+	}
+	
+	public Test11 getPrviTest(){
+		Test11 res = em.find(Test11.class, 1);
+		System.out.println(res.getNaslovtesta() + " TEST TEST TEST" + res.getIdtesta());
+		return res;
 	}
 }

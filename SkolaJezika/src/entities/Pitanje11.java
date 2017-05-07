@@ -25,14 +25,14 @@ public class Pitanje11 implements Serializable {
 	@OneToMany(mappedBy="pitanje11")
 	private List<Odgovor11> odgovor11s;
 
-	//bi-directional many-to-one association to Odgovornapitanj11
-	@OneToMany(mappedBy="pitanje11")
-	private List<Odgovornapitanj11> odgovornapitanj11s;
-
 	//bi-directional many-to-one association to Test11
 	@ManyToOne
 	@JoinColumn(name="IDTESTA")
 	private Test11 test11;
+
+	//bi-directional many-to-one association to Odgovornapitanje11
+	@OneToMany(mappedBy="pitanje11")
+	private List<Odgovornapitanje11> odgovornapitanje11s;
 
 	public Pitanje11() {
 	}
@@ -75,34 +75,34 @@ public class Pitanje11 implements Serializable {
 		return odgovor11;
 	}
 
-	public List<Odgovornapitanj11> getOdgovornapitanj11s() {
-		return this.odgovornapitanj11s;
-	}
-
-	public void setOdgovornapitanj11s(List<Odgovornapitanj11> odgovornapitanj11s) {
-		this.odgovornapitanj11s = odgovornapitanj11s;
-	}
-
-	public Odgovornapitanj11 addOdgovornapitanj11(Odgovornapitanj11 odgovornapitanj11) {
-		getOdgovornapitanj11s().add(odgovornapitanj11);
-		odgovornapitanj11.setPitanje11(this);
-
-		return odgovornapitanj11;
-	}
-
-	public Odgovornapitanj11 removeOdgovornapitanj11(Odgovornapitanj11 odgovornapitanj11) {
-		getOdgovornapitanj11s().remove(odgovornapitanj11);
-		odgovornapitanj11.setPitanje11(null);
-
-		return odgovornapitanj11;
-	}
-
 	public Test11 getTest11() {
 		return this.test11;
 	}
 
 	public void setTest11(Test11 test11) {
 		this.test11 = test11;
+	}
+
+	public List<Odgovornapitanje11> getOdgovornapitanje11s() {
+		return this.odgovornapitanje11s;
+	}
+
+	public void setOdgovornapitanje11s(List<Odgovornapitanje11> odgovornapitanje11s) {
+		this.odgovornapitanje11s = odgovornapitanje11s;
+	}
+
+	public Odgovornapitanje11 addOdgovornapitanje11(Odgovornapitanje11 odgovornapitanje11) {
+		getOdgovornapitanje11s().add(odgovornapitanje11);
+		odgovornapitanje11.setPitanje11(this);
+
+		return odgovornapitanje11;
+	}
+
+	public Odgovornapitanje11 removeOdgovornapitanje11(Odgovornapitanje11 odgovornapitanje11) {
+		getOdgovornapitanje11s().remove(odgovornapitanje11);
+		odgovornapitanje11.setPitanje11(null);
+
+		return odgovornapitanje11;
 	}
 
 }

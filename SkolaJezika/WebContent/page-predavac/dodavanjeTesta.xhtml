@@ -9,49 +9,65 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-		<p:panelGrid columns="3">
-			<p:outputLabel>Tip pitanja:</p:outputLabel>
-			<p:selectOneMenu id="tipPitanja"
-				value="#{testManagedBean.tipPitanja}">
-				<f:selectItem itemLabel="-----select-----" itemValue="#{null}"
-					noSelectionOption="true" selected="selected" />
-				<f:selectItems value="#{testManagedBean.tipoviPitanja}" />
-				<f:ajax render="forma1 and formaOabriaOdgovora" />
-			</p:selectOneMenu>
+		<ui:repeat var="value" value="#{testManagedBean.pitanja}">
+			<p:panelGrid style="margin-bottom:30px" columns="3">
+				<p:outputLabel>Tekst pitanja:</p:outputLabel>
+				<p:inputText value="#{value.tekstpitanja}"></p:inputText>
+				<p:commandButton value="Dodaj ponudjene odgovore">
+					<p:ajax
+						listener="#{testManagedBean.setImaPonudjenihOdgovora()}"
+						process="@form" update="@form" render="@form" />
+				</p:commandButton>
+				<p:outputPanel rendered="#{testManagedBean.imaPonudjenihOdgovora}">Tekst odgovora:</p:outputPanel>
+				<p:outputPanel rendered="#{testManagedBean.imaPonudjenihOdgovora}">Tacan:</p:outputPanel>
+				<p:outputPanel rendered="#{testManagedBean.imaPonudjenihOdgovora}"></p:outputPanel>
+				<p:panelGrid 
+					rendered="#{not empty value.odgovornapitanje11s}">
+					<ui:repeat var="odgovor" value="#{value.odgovornapitanje11s}">
+						<p:outputPanel></p:outputPanel>
+						<p:inputText value="#{odgovor.tekstodgovora}" />
+					</ui:repeat>
+				</p:panelGrid>
+				<p:panelGrid columns="1"
+					rendered="#{not empty value.odgovornapitanje11s}" >
+					<ui:repeat var="bool" value="#{testManagedBean.mapa.get(value)}"
+						varStatus="status">
+						<p:outputPanel></p:outputPanel>
+						<p:selectBooleanCheckbox value="#{bool}">
+							<f:ajax
+								listener="#{testManagedBean.promeniStanje(value,status.index)}"></f:ajax>
+						</p:selectBooleanCheckbox>
+					</ui:repeat>
+				</p:panelGrid>
+				<p:panelGrid columns="1"
+					rendered="#{not empty value.odgovornapitanje11s}">
+					<ui:repeat var="odgovor" value="#{value.odgovornapitanje11s}"
+						varStatus="status">
+						<p:outputPanel></p:outputPanel>
+						<p:commandButton value="obrisi">
+							<p:ajax
+								listener="#{testManagedBean.obrisiOdogovr(value,status.index)}"
+								process="@form" update="@form" render="@form" />
+						</p:commandButton>
+					</ui:repeat>
+				</p:panelGrid>
+			</p:panelGrid>
+
+			<p:commandButton rendered="#{testManagedBean.imaPonudjenihOdgovora}" value="Dodaj odgovor" style="margin-bottom:30px; margin-top:-30px">
+				<p:ajax listener="#{testManagedBean.dodajOdgovor(value)}"
+					process="@form" update="@form" render="@form" />
+			</p:commandButton>
+		</ui:repeat>
+		<p:panelGrid columns="2">
+			<p:commandButton value="Dodaj pitanje">
+				<p:ajax listener="#{testManagedBean.dodajPitanje()}" process="@form"
+					render="@form" update="@form" />
+			</p:commandButton>
+			<p:commandButton value="Sacuvaj pitanja">
+				<p:ajax process="@form" render="@form" update="@form"
+					listener="#{testManagedBean.savePitanjaUBazu()}" />
+			</p:commandButton>
 		</p:panelGrid>
 	</h:form>
-	<h:form id="forma1">
-		<ui:repeat var="value" value="#{testManagedBean.pitanja}">
-			<p:panelGrid columns="2" rendered="#{testManagedBean.tipPitanja eq 'Odabir tacnih'}">
-				<p:outputLabel>Tekst pitanja: </p:outputLabel>
-				<h:inputText value="#{value.tekstpitanja}" />
-			</p:panelGrid>
-			<h:form id="formaOabriaOdgovora">
-				<p:panelGrid columns="2"
-					rendered="#{testManagedBean.tipPitanja eq 'Odabir tacnih'}">
-					<ui:repeat var="odgovor"
-						value="#{testManagedBean.tekstoviOdgovora}">
-						<p:panelGrid columns="1">
-							<p:outputPanel>Tekst odgovora:</p:outputPanel>
-						</p:panelGrid>
-					</ui:repeat>
-					<ui:repeat var="odgovor"
-						value="#{testManagedBean.tekstoviOdgovora}">
-						<p:panelGrid columns="1">
-							<p:inputText value="#{odgovor}"></p:inputText>
-						</p:panelGrid>
-					</ui:repeat>
-					<p:commandButton value="Dodaj odgovor">
-						<f:ajax listener="#{testManagedBean.dodajOdgovor()}"
-							render="@form" />
-					</p:commandButton>
-				</p:panelGrid>
-			</h:form>
-
-		</ui:repeat>
-		<h:commandButton action="#{testManagedBean.sacuvajIzmene()}"
-			value="Sacuvaj" />
-	</h:form>
 </h:body>
-
 </html>
