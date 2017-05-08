@@ -10,8 +10,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.primefaces.context.RequestContext;
+
 import beans.impl.KomunikacijaSaBazomBean;
 import beans.impl.PredavacBean;
+import entities.Lekcija11;
 import entities.Odgovornapitanje11;
 import entities.Pitanje11;
 import entities.Test11;
@@ -24,24 +27,26 @@ public class TestManagedBean {
 
 	@EJB
 	KomunikacijaSaBazomBean komunikacijaSaBazomBean;
-	
+
+	Lekcija11 lekcija11;
+
 	Test11 test11 = new Test11();
-//	Test11 test11 = komunikacijaSaBazomBean.getPrviTest();
+	// Test11 test11 = komunikacijaSaBazomBean.getPrviTest();
 
 	List<Pitanje11> pitanja = new ArrayList<>();
 	Map<Pitanje11, List<Boolean>> mapa = new HashMap<>();
 	boolean imaPonudjenihOdgovora = false;
+
 	@PostConstruct
 	public void testPopuni() {
-		test11 = komunikacijaSaBazomBean.getPrviTest();
-	
-	}
-	
+		lekcija11 = komunikacijaSaBazomBean.getLekcijaForID(1);
 
-	public void setImaPonudjenihOdgovora(){
+	}
+
+	public void setImaPonudjenihOdgovora() {
 		imaPonudjenihOdgovora = true;
 	}
-	
+
 	public void dodajOdgovor(Pitanje11 pitanje11) {
 		Odgovornapitanje11 odgovornapitanje11 = new Odgovornapitanje11();
 		mapa.get(pitanje11).add(false);
@@ -52,8 +57,7 @@ public class TestManagedBean {
 
 	public void dodajPitanje() {
 		komunikacijaSaBazomBean.getPrviTest();
-		
-		
+
 		imaPonudjenihOdgovora = false;
 		Pitanje11 pitanjeTemp = new Pitanje11();
 		mapa.put(pitanjeTemp, new ArrayList<>());
@@ -74,19 +78,72 @@ public class TestManagedBean {
 	}
 
 	public void savePitanjaUBazu() {
-		for (int i = 0; i < pitanja.size(); i++) {
-			pitanja.get(i).setTest11(test11);
-			for (int j = 0; j < pitanja.get(i).getOdgovornapitanje11s().size(); j++) {
-				pitanja.get(i).getOdgovornapitanje11s().get(j)
-						.setJetacan(boolToByte((mapa.get(pitanja.get(i)).get(j))));
+		if (ispisiGreske()) {
+			test11.setLekcija11(lekcija11);
+			komunikacijaSaBazomBean.saveTest(test11);
+			for (int i = 0; i < pitanja.size(); i++) {
+				pitanja.get(i).setTest11(test11);
+				for (int j = 0; j < pitanja.get(i).getOdgovornapitanje11s().size(); j++) {
+					pitanja.get(i).getOdgovornapitanje11s().get(j)
+							.setJetacan(boolToByte((mapa.get(pitanja.get(i)).get(j))));
+				}
+				komunikacijaSaBazomBean.savePitanje(pitanja.get(i));
+				for (int k = 0; k < pitanja.get(i).getOdgovornapitanje11s().size(); k++) {
+					pitanja.get(i).getOdgovornapitanje11s().get(k).setPitanje11(pitanja.get(i));
+					komunikacijaSaBazomBean.saveOdgovorNaPitanje(pitanja.get(i).getOdgovornapitanje11s().get(k));
+				}
+
 			}
-			komunikacijaSaBazomBean.savePitanje(pitanja.get(i));
-			for(int k=0;k<pitanja.get(i).getOdgovornapitanje11s().size();k++){
-				pitanja.get(i).getOdgovornapitanje11s().get(k).setPitanje11(pitanja.get(i));
-				komunikacijaSaBazomBean.saveOdgovorNaPitanje(pitanja.get(i).getOdgovornapitanje11s().get(k));
-			}
-			
 		}
+
+	}
+
+	public boolean ispisiGreske() {
+		if ((test11.getNaslovtesta().equals("")) || (test11.getBrpoenatesta() < 1)
+				|| (test11.getDatumtesta() == null)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('dlg1').show();");
+			return false;
+		}
+		if ((pitanja.size() < 1)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('dlg2').show();");
+			return false;
+		}
+		for (Pitanje11 pitanje11 : pitanja) {
+			if (pitanje11.getTekstpitanja().equals("")) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('dlg3').show();");
+				return false;
+			}
+			if (pitanje11.getOdgovornapitanje11s() != null) {
+				for (Odgovornapitanje11 odgovornapitanje11 : pitanje11.getOdgovornapitanje11s()) {
+					if (odgovornapitanje11.getTekstodgovora().equals("")) {
+						RequestContext context = RequestContext.getCurrentInstance();
+						context.execute("PF('dlg3').show();");
+						return false;
+					}
+				}
+			}
+
+		}
+		for (Map.Entry<Pitanje11, List<Boolean>> entry : mapa.entrySet()) {
+			for (Boolean bool : entry.getValue()) {
+				if (bool) {
+					return true;
+				} else {
+					RequestContext context = RequestContext.getCurrentInstance();
+					context.execute("PF('dlg4').show();");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public void obrisiPitanje() {
+		mapa.remove(pitanja.get(pitanja.size() - 1));
+		pitanja.remove(pitanja.size() - 1);
 
 	}
 
@@ -98,15 +155,15 @@ public class TestManagedBean {
 		}
 	}
 
-	public void obrisiOdogovr(Pitanje11 pitanje11,Integer pozicija){
-		System.out.println(pozicija+ "  "+ pitanje11.getTekstpitanja());
-		System.out.println(pitanje11.getOdgovornapitanje11s().size()+ "   "+ mapa.get(pitanje11).size());
-		pitanje11.getOdgovornapitanje11s().remove((int)pozicija);
-		mapa.get(pitanje11).remove((int)pozicija);
-		System.out.println(pitanje11.getOdgovornapitanje11s().size()+ "   "+ mapa.get(pitanje11).size());
-		
+	public void obrisiOdogovr(Pitanje11 pitanje11, Integer pozicija) {
+		System.out.println(pozicija + "  " + pitanje11.getTekstpitanja());
+		System.out.println(pitanje11.getOdgovornapitanje11s().size() + "   " + mapa.get(pitanje11).size());
+		pitanje11.getOdgovornapitanje11s().remove((int) pozicija);
+		mapa.get(pitanje11).remove((int) pozicija);
+		System.out.println(pitanje11.getOdgovornapitanje11s().size() + "   " + mapa.get(pitanje11).size());
+
 	}
-	
+
 	public List<Pitanje11> getPitanja() {
 		return pitanja;
 	}
@@ -134,6 +191,13 @@ public class TestManagedBean {
 	public void setImaPonudjenihOdgovora(boolean imaPonudjenihOdgovora) {
 		this.imaPonudjenihOdgovora = imaPonudjenihOdgovora;
 	}
-	
+
+	public Test11 getTest11() {
+		return test11;
+	}
+
+	public void setTest11(Test11 test11) {
+		this.test11 = test11;
+	}
 
 }

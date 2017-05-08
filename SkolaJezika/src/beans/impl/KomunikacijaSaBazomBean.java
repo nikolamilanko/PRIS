@@ -111,4 +111,8 @@ public class KomunikacijaSaBazomBean {
 		System.out.println(res.getNaslovtesta() + " TEST TEST TEST" + res.getIdtesta());
 		return res;
 	}
+	
+	public void saveTest(Test11 test11){
+		em.persist(test11);
+	}
 }
