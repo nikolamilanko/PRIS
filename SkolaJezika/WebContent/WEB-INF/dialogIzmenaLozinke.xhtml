@@ -15,20 +15,20 @@
 				<p:panelGrid columns="2" columnClasses="label,value">
 
 					<h:outputLabel for="stariPassword" value="Stari password:" />
-					<p:password id="stariPassword" value="#{adminMB.stariPassword}"
+					<p:password id="stariPassword" value="#{manageBeanLogin.stariPassword}"
 						label="stari password" required="true" />
 
 					<h:outputLabel for="password" value="Novi password: " />
-					<p:password id="password" value="#{adminMB.noviPassword}"
+					<p:password id="password" value="#{manageBeanLogin.noviPassword}"
 						match="potvrda" label="password" required="true" feedback="true"
 						validatorMessage="Password mora imati izmedju 1 i 20 karaktera i moze da sadrzi samo mala i velika slova i brojeve." />
 
 					<h:outputLabel for="potvrda" value="Potvrdi novi password: " />
-					<p:password id="potvrda" value="#{adminMB.potvrdaNovogPassworda}"
+					<p:password id="potvrda" value="#{manageBeanLogin.potvrdaNovogPassworda}"
 						label="potvrdi password" required="true" />
 
 					<p:commandButton value="Sacuvaj"
-						actionListener="#{adminMB.izmeniPassword}"
+						actionListener="#{manageBeanLogin.izmeniPassword}"
 						update="izmenaPassworda :myform:msgs" validateClient="true" />
 					<p:button value="Nazad" />
 				</p:panelGrid>

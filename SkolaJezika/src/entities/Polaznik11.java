@@ -11,7 +11,10 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Polaznik11.findAll", query="SELECT p FROM Polaznik11 p")
+@NamedQueries({
+	@NamedQuery(name="Polaznik11.findAll", query="SELECT p FROM Polaznik11 p"),
+	@NamedQuery(name="Polaznik11.findZaUsernameIPassword", query="SELECT p FROM Polaznik11 p WHERE p.logovanje11.idlogovanja=(SELECT l.idlogovanja FROM Logovanje11 l WHERE l.username=:username AND l.password=:password)")
+})
 @Table(name="POLAZNIK11")
 public class Polaznik11 implements Serializable {
 	private static final long serialVersionUID = 1L;

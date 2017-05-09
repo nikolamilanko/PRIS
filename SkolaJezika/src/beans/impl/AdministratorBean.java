@@ -32,7 +32,7 @@ public class AdministratorBean implements AdministratorBeanRemote {
 		// TODO Auto-generated method stub
 		try {
 			TypedQuery<Administrator11> query = em.createQuery(
-					"select a from Administrator11 a where a.idlogovanja=(select l.idlogovanja from Logovanje11 l where l.username=:username and l.password=:password)",
+					"select a from Administrator11 a where a.logovanje11.idlogovanja=(select l.idlogovanja from Logovanje11 l where l.username=:username and l.password=:password)",
 					Administrator11.class);
 			query.setParameter("username", username);
 			query.setParameter("password", password);

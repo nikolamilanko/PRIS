@@ -26,7 +26,10 @@
 <h:body>
 	<f:view>
 
-		<ui:insert name="metadata" />
+		<f:metadata>
+			<f:viewAction
+				action="#{manageBeanLogin.onLoadZaPredavaca(predavacMB.username)}" />
+		</f:metadata>
 
 		<h:form id="myform">
 			<p:commandButton immediate="true" value="Logout"
@@ -70,7 +73,39 @@
 			</p:panelGrid>
 		</h:form>
 
-		<ui:insert name="promeniLozinkuDialog" />
+		<h:form id="dialogForm">
+			<p:dialog header="Izmena passworda" widgetVar="dlgIzmenaPassworda"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="izmenaPassworda" style="text-align:center;">
+					<h:outputText value="Unesite stari i novi password:" />
+
+					<p:separator />
+
+					<p:panelGrid columns="2" columnClasses="label,value">
+
+						<h:outputLabel for="stariPassword" value="Stari password:" />
+						<p:password id="stariPassword" value="#{predavacMB.stariPassword}"
+							label="stari password" required="true" />
+
+						<h:outputLabel for="password" value="Novi password: " />
+						<p:password id="password" value="#{predavacMB.noviPassword}"
+							match="potvrda" label="password" required="true" feedback="true"
+							validatorMessage="Password mora imati izmedju 1 i 20 karaktera i moze da sadrzi samo mala i velika slova i brojeve." />
+
+						<h:outputLabel for="potvrda" value="Potvrdi novi password: " />
+						<p:password id="potvrda"
+							value="#{predavacMB.potvrdaNovogPassworda}"
+							label="potvrdi password" required="true" />
+
+						<p:commandButton value="Sacuvaj"
+							actionListener="#{predavacMB.izmeniPassword}"
+							update="izmenaPassworda :myform:msgs" validateClient="true" />
+						<p:button value="Nazad" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
 	</f:view>
 </h:body>
 </h:html>
+

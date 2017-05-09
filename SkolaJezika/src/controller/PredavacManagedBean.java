@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -14,7 +15,6 @@ import org.primefaces.context.RequestContext;
 
 import beans.impl.KomunikacijaSaBazomBean;
 import beans.impl.PredavacBean;
-import entities.Predavac11;
 
 @ManagedBean(name = "predavacMB")
 @SessionScoped
@@ -28,8 +28,6 @@ public class PredavacManagedBean {
 	@Size(min = 1, max = 20)
 	private String noviPassword;
 	private String potvrdaNovogPassworda;
-
-	private Predavac11 selektovaniPredavac;
 
 	@EJB
 	PredavacBean predavacBR;
@@ -77,14 +75,6 @@ public class PredavacManagedBean {
 		this.potvrdaNovogPassworda = potvrdaNovogPassworda;
 	}
 
-	public Predavac11 getSelektovaniPredavac() {
-		return selektovaniPredavac;
-	}
-
-	public void setSelektovaniPredavac(Predavac11 selektovaniPredavac) {
-		this.selektovaniPredavac = selektovaniPredavac;
-	}
-
 	public PredavacBean getPredavacBR() {
 		return predavacBR;
 	}
@@ -99,7 +89,7 @@ public class PredavacManagedBean {
 
 			try {
 				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext(); 
-				ec.redirect(ec.getRequestContextPath() + "/page-predavac/predavac.xhtml");
+				ec.redirect(ec.getRequestContextPath() + "/page-predavac/pocetnaPredavac.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -110,6 +100,19 @@ public class PredavacManagedBean {
 			username = "";
 			password = "";
 		}
-
+	}
+	
+	public void izmeniPassword() {
+		if (stariPassword.equals(password)) {
+			if (!bazaBR.izmeniPassword(username, noviPassword)) {
+				FacesMessage msg = new FacesMessage("Doslo je do greske prilikom cuvanje novog passworda!");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			} else {
+				RequestContext.getCurrentInstance().execute("PF('dlgIzmenaPassworda').hide()");
+			}
+		} else {
+			FacesMessage msg = new FacesMessage("Niste dobro uneli stari password!");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +20,12 @@ import entities.Predavac11;
 @ApplicationScoped
 public class ManageBeanLogin {
 
+	public static final String ADMINISTRATOR = "administrator";
+	public static final String PREDAVAC = "predavac";
+	public static final String POLAZNIK = "polaznik";
+	
 	private String zanimanje;
-	private String username;
-	private String password;
-
+	
 	private Date datumPocetka;
 	private Date datumKraja;
 
@@ -42,15 +45,22 @@ public class ManageBeanLogin {
 
 	public void onLoadZaPredavaca(String username) {
 		kursevi = bazaBR.vratiSveKurseveZaUsernamePredavaca(username);
-		predavaci = bazaBR.vratiSvePredavace();
+	}
+	
+	public void onLoadZaPolaznika(String username) {
+		kursevi = bazaBR.vratiSveKurseveZaUsernamePolaznika(username);
+	}
+	
+	public void vratiSveKurseve() throws IOException {
+		kursevi = bazaBR.vratiSveKurseve();
 	}
 
 	@PostConstruct
 	private void init() {
 		zanimanja = new ArrayList<>();
-		zanimanja.add("administrator");
-		zanimanja.add("predavac");
-		zanimanja.add("polaznik");
+		zanimanja.add(ADMINISTRATOR);
+		zanimanja.add(PREDAVAC);
+		zanimanja.add(POLAZNIK);
 	}
 
 	public List<Kurs11> getKursevi() {
@@ -83,22 +93,6 @@ public class ManageBeanLogin {
 
 	public void setZanimanje(String zanimanje) {
 		this.zanimanje = zanimanje;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public List<String> getZanimanja() {

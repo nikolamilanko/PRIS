@@ -29,6 +29,7 @@
 		<ui:insert name="metadata" />
 
 		<h:form id="myform">
+
 			<p:commandButton immediate="true" value="Logout"
 				action="#{manageBeanLogin.logout()}" />
 
@@ -42,12 +43,21 @@
 					</p:column>
 
 					<ui:insert name="dugmeZaDodavanjeKursa" />
+
 				</p:row>
 
 				<p:row>
 					<p:column colspan="2" styleClass="ui-widget-row">
 						<p:spacer height="100" />
 					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<ui:include src="/WEB-INF/datatablePredavaci.xhtml" />
+					</p:column>
+
+					<ui:insert name="dugmeZaDodavanjePredavaca" />
 				</p:row>
 
 				<p:row>
@@ -63,14 +73,44 @@
 						<p:commandButton value="Promena lozinke"
 							onclick="PF('dlgIzmenaPassworda').show();"
 							style="width:150px; display: block; margin: 0px auto;" />
-
 					</p:column>
 				</p:row>
-
 			</p:panelGrid>
 		</h:form>
 
-		<ui:insert name="promeniLozinkuDialog" />
+		<h:form id="dialogForm">
+			<p:dialog header="Izmena passworda" widgetVar="dlgIzmenaPassworda"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="izmenaPassworda" style="text-align:center;">
+					<h:outputText value="Unesite stari i novi password:" />
+
+					<p:separator />
+
+					<p:panelGrid columns="2" columnClasses="label,value">
+
+						<h:outputLabel for="stariPassword" value="Stari password:" />
+						<p:password id="stariPassword"
+							value="#{adminMB.stariPassword}" label="stari password"
+							required="true" />
+
+						<h:outputLabel for="password" value="Novi password: " />
+						<p:password id="password" value="#{adminMB.noviPassword}"
+							match="potvrda" label="password" required="true" feedback="true"
+							validatorMessage="Password mora imati izmedju 1 i 20 karaktera i moze da sadrzi samo mala i velika slova i brojeve." />
+
+						<h:outputLabel for="potvrda" value="Potvrdi novi password: " />
+						<p:password id="potvrda"
+							value="#{adminMB.potvrdaNovogPassworda}"
+							label="potvrdi password" required="true" />
+
+						<p:commandButton value="Sacuvaj"
+							actionListener="#{adminMB.izmeniPassword}"
+							update="izmenaPassworda :myform:msgs" validateClient="true" />
+						<p:button value="Nazad" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
 	</f:view>
 </h:body>
 </h:html>

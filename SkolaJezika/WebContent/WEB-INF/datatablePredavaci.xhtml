@@ -10,8 +10,8 @@
 		selection="#{adminMB.selektovaniPredavac}" selectionMode="single">
 
 		<f:facet name="header">
-            					Svi predavaci
-        					</f:facet>
+            <p:outputLabel value="Svi predavaci" />
+        </f:facet>
 
 		<p:ajax event="rowEdit" listener="#{adminMB.izmeniPredavaca}"
 			update=":myform:msgs" />

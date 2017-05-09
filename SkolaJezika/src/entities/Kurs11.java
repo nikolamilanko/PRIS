@@ -11,7 +11,11 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Kurs11.findAll", query="SELECT k FROM Kurs11 k")
+@NamedQueries({
+	@NamedQuery(name="Kurs11.findAll", query="SELECT k FROM Kurs11 k"),
+	@NamedQuery(name="Kurs11.findAllZaUsernamePredavaca", query="SELECT k FROM Kurs11 k WHERE k.predavac11.logovanje11.username = :username"),
+	@NamedQuery(name="Kurs11.findAllZaUsernamePolaznika", query="SELECT k FROM Kurs11 k JOIN k.ishod11s i WHERE i.polaznik11.logovanje11.username = :username")
+})
 @Table(name="KURS11")
 public class Kurs11 implements Serializable {
 	private static final long serialVersionUID = 1L;
