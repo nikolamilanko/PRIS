@@ -23,7 +23,7 @@
 			</f:facet>
 
 			<p:column headerText="Naziv" sortBy="#{kurs.nazivkursa}"
-				filterBy="#{kurs.nazivkursa}">
+				filterBy="#{kurs.nazivkursa}" filterMatchMode="contains">
 				<h:outputText value="#{kurs.nazivkursa}" />
 			</p:column>
 
@@ -37,13 +37,13 @@
 
 			<p:column headerText="Predavac"
 				sortBy="#{kurs.predavac11.imepredavaca} #{kurs.predavac11.prezimepredavaca}"
-				filterBy="#{kurs.predavac11.imepredavaca} #{kurs.predavac11.prezimepredavaca}">
+				filterBy="#{kurs.predavac11.imepredavaca} #{kurs.predavac11.prezimepredavaca}" filterMatchMode="contains">
 				<h:outputText
 					value="#{kurs.predavac11.imepredavaca} #{kurs.predavac11.prezimepredavaca}" />
 			</p:column>
 
 			<p:column headerText="Potrebni poeni" sortBy="#{kurs.potrebnipoeni}"
-				filterBy="#{kurs.potrebnipoeni}">
+				filterBy="#{kurs.potrebnipoeni}" filterMatchMode="exact">
 				<h:outputText value="#{kurs.potrebnipoeni}" />
 			</p:column>
 		</p:dataTable>
