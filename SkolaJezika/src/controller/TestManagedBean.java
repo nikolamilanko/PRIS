@@ -127,18 +127,28 @@ public class TestManagedBean {
 			}
 
 		}
+		boolean check = false;
 		for (Map.Entry<Pitanje11, List<Boolean>> entry : mapa.entrySet()) {
-			for (Boolean bool : entry.getValue()) {
-				if (bool) {
-					return true;
-				} else {
+			System.out.println("PITANJE: " + entry.getKey().getTekstpitanja() + " POCETAK");
+			if ((entry.getValue() != null) && (entry.getValue().size() > 0)) {
+				check = false;
+				for (Boolean bool : entry.getValue()) {
+
+					if (bool) {
+						System.out.println("PITANJE: " + entry.getKey().getTekstpitanja() + "   " + bool);
+						check = true;
+					}
+				}
+				if (!check) {
 					RequestContext context = RequestContext.getCurrentInstance();
 					context.execute("PF('dlg4').show();");
 					return false;
 				}
 			}
+			check =true;
+			System.out.println("PITANJE: " + entry.getKey().getTekstpitanja() + " KRAJ");
 		}
-		return true;
+		return check;
 	}
 
 	public void obrisiPitanje() {
