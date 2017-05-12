@@ -36,7 +36,7 @@ public class PregledTestaManagedBean {
 
 	@PostConstruct
 	private void popuniTest() {
-		test11 = komunikacijaSaBazomBean.getTestForID(19);
+		test11 = komunikacijaSaBazomBean.getTestForID(24);
 		polaznik11 = komunikacijaSaBazomBean.getPolaznikForID(1);
 		pitanja = komunikacijaSaBazomBean.getPitanjaForTest(test11);
 		for (Pitanje11 pitanje11 : pitanja) {

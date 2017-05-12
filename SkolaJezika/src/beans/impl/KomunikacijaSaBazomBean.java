@@ -87,6 +87,17 @@ public class KomunikacijaSaBazomBean {
 			return new ArrayList<>();
 	}
 
+	public List<Kurs11> vratiSveKurseveZaUsernamePolaznika(String username) {
+		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAllZaUsernamePolaznika", Kurs11.class);
+		q.setParameter("username", username);
+		List<Kurs11> kursevi = q.getResultList();
+
+		if (kursevi != null)
+			return kursevi;
+		else
+			return new ArrayList<>();
+	}
+
 	public List<Predavac11> vratiSvePredavace() {
 		TypedQuery<Predavac11> q = em.createNamedQuery("Predavac11.findAll", Predavac11.class);
 		List<Predavac11> predavaci = q.getResultList();
@@ -97,9 +108,11 @@ public class KomunikacijaSaBazomBean {
 			return new ArrayList<>();
 	}
 
-	public boolean izmeniPassword(int idLogovanja, String noviPassword) {
+	public boolean izmeniPassword(String username, String noviPassword) {
 		try {
-			Logovanje11 l = (Logovanje11) em.find(Logovanje11.class, idLogovanja);
+			TypedQuery<Logovanje11> q = em.createNamedQuery("Logovanje11.findForUsername", Logovanje11.class);
+			q.setParameter("username", username);
+			Logovanje11 l = q.getSingleResult();
 			l.setPassword(noviPassword);
 			return true;
 		} catch (Exception e) {
@@ -213,10 +226,10 @@ public class KomunikacijaSaBazomBean {
 
 	public void updateRezultatBrPoena(Rezultat11 rezultat11, Test11 test11, int brPoena) {
 		rezultat11.setBrpoena((int) brPoena);
-		if(brPoena/test11.getBrpoenatesta()>=0.5){
-			rezultat11.setPolozio((byte)1);
-		}else{
-			rezultat11.setPolozio((byte)0);
+		if (brPoena / test11.getBrpoenatesta() >= 0.5) {
+			rezultat11.setPolozio((byte) 1);
+		} else {
+			rezultat11.setPolozio((byte) 0);
 		}
 		em.merge(rezultat11);
 	}

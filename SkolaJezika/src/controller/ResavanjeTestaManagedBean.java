@@ -35,7 +35,7 @@ public class ResavanjeTestaManagedBean {
 
 	@PostConstruct
 	private void testPopuni() {
-		test11 = komunikacijaSaBazomBean.getTestForID(19);
+		test11 = komunikacijaSaBazomBean.getTestForID(24);
 		System.out.println("TEST TEST TEST");
 		polaznik11 = komunikacijaSaBazomBean.getPolaznikForID(1);
 		pitanja = komunikacijaSaBazomBean.getPitanjaForTest(test11);
