@@ -22,15 +22,15 @@ public class Rezultat11 implements Serializable {
 
 	private byte polozio;
 
-	//bi-directional many-to-one association to Polaznik11
-	@ManyToOne
-	@JoinColumn(name="IDPOLAZNIKA")
-	private Polaznik11 polaznik11;
-
 	//bi-directional many-to-one association to Test11
 	@ManyToOne
 	@JoinColumn(name="IDTESTA")
 	private Test11 test11;
+
+	//bi-directional many-to-one association to Polaznik11
+	@ManyToOne
+	@JoinColumn(name="IDPOLAZNIKA")
+	private Polaznik11 polaznik11;
 
 	public Rezultat11() {
 	}
@@ -59,20 +59,20 @@ public class Rezultat11 implements Serializable {
 		this.polozio = polozio;
 	}
 
-	public Polaznik11 getPolaznik11() {
-		return this.polaznik11;
-	}
-
-	public void setPolaznik11(Polaznik11 polaznik11) {
-		this.polaznik11 = polaznik11;
-	}
-
 	public Test11 getTest11() {
 		return this.test11;
 	}
 
 	public void setTest11(Test11 test11) {
 		this.test11 = test11;
+	}
+
+	public Polaznik11 getPolaznik11() {
+		return this.polaznik11;
+	}
+
+	public void setPolaznik11(Polaznik11 polaznik11) {
+		this.polaznik11 = polaznik11;
 	}
 
 }

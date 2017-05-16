@@ -32,6 +32,10 @@ public class Polaznik11 implements Serializable {
 
 	private String prezimepolaznika;
 
+	//bi-directional many-to-one association to Ocenakursa
+	@OneToMany(mappedBy="polaznik11")
+	private List<Ocenakursa> ocenakursas;
+
 	//bi-directional many-to-one association to Ishod11
 	@OneToMany(mappedBy="polaznik11")
 	private List<Ishod11> ishod11s;
@@ -94,6 +98,28 @@ public class Polaznik11 implements Serializable {
 
 	public void setPrezimepolaznika(String prezimepolaznika) {
 		this.prezimepolaznika = prezimepolaznika;
+	}
+
+	public List<Ocenakursa> getOcenakursas() {
+		return this.ocenakursas;
+	}
+
+	public void setOcenakursas(List<Ocenakursa> ocenakursas) {
+		this.ocenakursas = ocenakursas;
+	}
+
+	public Ocenakursa addOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().add(ocenakursa);
+		ocenakursa.setPolaznik11(this);
+
+		return ocenakursa;
+	}
+
+	public Ocenakursa removeOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().remove(ocenakursa);
+		ocenakursa.setPolaznik11(null);
+
+		return ocenakursa;
 	}
 
 	public List<Ishod11> getIshod11s() {

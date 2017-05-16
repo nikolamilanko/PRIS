@@ -19,7 +19,6 @@ public class Odgovornapitanje11 implements Serializable {
 	private int idodgovoranapitanje;
 
 	private byte jetacan;
-	
 
 	private String tekstodgovora;
 
@@ -62,8 +61,5 @@ public class Odgovornapitanje11 implements Serializable {
 	public void setPitanje11(Pitanje11 pitanje11) {
 		this.pitanje11 = pitanje11;
 	}
-
-	
-	
 
 }

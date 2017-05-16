@@ -4,19 +4,21 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
  * The persistent class for the PREDAVAC11 database table.
  * 
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "Predavac11.findAll", query = "SELECT p FROM Predavac11 p"),
-		@NamedQuery(name = "Predavac11.findZaUsernameIPassword", query = "SELECT p FROM Predavac11 p WHERE p.logovanje11.idlogovanja=(SELECT l.idlogovanja FROM Logovanje11 l WHERE l.username=:username AND l.password=:password)") })
+@NamedQueries({ 
+	@NamedQuery(name = "Predavac11.findAll", query = "SELECT p FROM Predavac11 p"),
+	@NamedQuery(name = "Predavac11.findZaUsernameIPassword", query = "SELECT p FROM Predavac11 p WHERE p.logovanje11.idlogovanja=(SELECT l.idlogovanja FROM Logovanje11 l WHERE l.username=:username AND l.password=:password)") })
 @Table(name = "PREDAVAC11")
 public class Predavac11 implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idpredavaca;
 
 	private String emailpredavaca;
@@ -27,13 +29,13 @@ public class Predavac11 implements Serializable {
 
 	private String titula;
 
-	// bi-directional many-to-one association to Kurs11
-	@OneToMany(mappedBy = "predavac11")
+	//bi-directional many-to-one association to Kurs11
+	@OneToMany(mappedBy="predavac11")
 	private List<Kurs11> kurs11s;
 
-	// bi-directional many-to-one association to Logovanje11
+	//bi-directional many-to-one association to Logovanje11
 	@ManyToOne
-	@JoinColumn(name = "IDLOGOVANJA")
+	@JoinColumn(name="IDLOGOVANJA")
 	private Logovanje11 logovanje11;
 
 	public Predavac11() {

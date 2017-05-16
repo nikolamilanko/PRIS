@@ -25,14 +25,14 @@ public class Pitanje11 implements Serializable {
 	@OneToMany(mappedBy="pitanje11")
 	private List<Odgovor11> odgovor11s;
 
+	//bi-directional many-to-one association to Odgovornapitanje11
+	@OneToMany(mappedBy="pitanje11")
+	private List<Odgovornapitanje11> odgovornapitanje11s;
+
 	//bi-directional many-to-one association to Test11
 	@ManyToOne
 	@JoinColumn(name="IDTESTA")
 	private Test11 test11;
-
-	//bi-directional many-to-one association to Odgovornapitanje11
-	@OneToMany(mappedBy="pitanje11")
-	private List<Odgovornapitanje11> odgovornapitanje11s;
 
 	public Pitanje11() {
 	}
@@ -75,14 +75,6 @@ public class Pitanje11 implements Serializable {
 		return odgovor11;
 	}
 
-	public Test11 getTest11() {
-		return this.test11;
-	}
-
-	public void setTest11(Test11 test11) {
-		this.test11 = test11;
-	}
-
 	public List<Odgovornapitanje11> getOdgovornapitanje11s() {
 		return this.odgovornapitanje11s;
 	}
@@ -103,6 +95,14 @@ public class Pitanje11 implements Serializable {
 		odgovornapitanje11.setPitanje11(null);
 
 		return odgovornapitanje11;
+	}
+
+	public Test11 getTest11() {
+		return this.test11;
+	}
+
+	public void setTest11(Test11 test11) {
+		this.test11 = test11;
 	}
 
 }
