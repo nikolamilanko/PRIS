@@ -36,26 +36,16 @@ public class Kurs11 implements Serializable {
 
 	private int potrebnipoeni;
 
-	//bi-directional many-to-one association to Ocenakursa
-	@OneToMany(mappedBy="kurs11")
-	private List<Ocenakursa> ocenakursas;
+	private float prosecnaocenakursa;
 
 	//bi-directional many-to-one association to Ishod11
 	@OneToMany(mappedBy="kurs11")
 	private List<Ishod11> ishod11s;
 
-	//bi-directional many-to-one association to Komentar11
-	@OneToMany(mappedBy="kurs11")
-	private List<Komentar11> komentar11s;
-
 	//bi-directional many-to-one association to Predavac11
 	@ManyToOne
 	@JoinColumn(name="IDPREDAVACA")
 	private Predavac11 predavac11;
-
-	//bi-directional many-to-one association to Lekcija11
-	@OneToMany(mappedBy="kurs11")
-	private List<Lekcija11> lekcija11s;
 
 	public Kurs11() {
 	}
@@ -108,26 +98,12 @@ public class Kurs11 implements Serializable {
 		this.potrebnipoeni = potrebnipoeni;
 	}
 
-	public List<Ocenakursa> getOcenakursas() {
-		return this.ocenakursas;
+	public float getProsecnaocenakursa() {
+		return this.prosecnaocenakursa;
 	}
 
-	public void setOcenakursas(List<Ocenakursa> ocenakursas) {
-		this.ocenakursas = ocenakursas;
-	}
-
-	public Ocenakursa addOcenakursa(Ocenakursa ocenakursa) {
-		getOcenakursas().add(ocenakursa);
-		ocenakursa.setKurs11(this);
-
-		return ocenakursa;
-	}
-
-	public Ocenakursa removeOcenakursa(Ocenakursa ocenakursa) {
-		getOcenakursas().remove(ocenakursa);
-		ocenakursa.setKurs11(null);
-
-		return ocenakursa;
+	public void setProsecnaocenakursa(float prosecnaocenakursa) {
+		this.prosecnaocenakursa = prosecnaocenakursa;
 	}
 
 	public List<Ishod11> getIshod11s() {
@@ -152,56 +128,12 @@ public class Kurs11 implements Serializable {
 		return ishod11;
 	}
 
-	public List<Komentar11> getKomentar11s() {
-		return this.komentar11s;
-	}
-
-	public void setKomentar11s(List<Komentar11> komentar11s) {
-		this.komentar11s = komentar11s;
-	}
-
-	public Komentar11 addKomentar11(Komentar11 komentar11) {
-		getKomentar11s().add(komentar11);
-		komentar11.setKurs11(this);
-
-		return komentar11;
-	}
-
-	public Komentar11 removeKomentar11(Komentar11 komentar11) {
-		getKomentar11s().remove(komentar11);
-		komentar11.setKurs11(null);
-
-		return komentar11;
-	}
-
 	public Predavac11 getPredavac11() {
 		return this.predavac11;
 	}
 
 	public void setPredavac11(Predavac11 predavac11) {
 		this.predavac11 = predavac11;
-	}
-
-	public List<Lekcija11> getLekcija11s() {
-		return this.lekcija11s;
-	}
-
-	public void setLekcija11s(List<Lekcija11> lekcija11s) {
-		this.lekcija11s = lekcija11s;
-	}
-
-	public Lekcija11 addLekcija11(Lekcija11 lekcija11) {
-		getLekcija11s().add(lekcija11);
-		lekcija11.setKurs11(this);
-
-		return lekcija11;
-	}
-
-	public Lekcija11 removeLekcija11(Lekcija11 lekcija11) {
-		getLekcija11s().remove(lekcija11);
-		lekcija11.setKurs11(null);
-
-		return lekcija11;
 	}
 
 }

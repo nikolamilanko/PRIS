@@ -26,10 +26,6 @@ public class Logovanje11 implements Serializable {
 
 	private String username;
 
-	//bi-directional many-to-one association to Administrator11
-	@OneToMany(mappedBy="logovanje11")
-	private List<Administrator11> administrator11s;
-
 	//bi-directional many-to-one association to Polaznik11
 	@OneToMany(mappedBy="logovanje11")
 	private List<Polaznik11> polaznik11s;
@@ -63,28 +59,6 @@ public class Logovanje11 implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public List<Administrator11> getAdministrator11s() {
-		return this.administrator11s;
-	}
-
-	public void setAdministrator11s(List<Administrator11> administrator11s) {
-		this.administrator11s = administrator11s;
-	}
-
-	public Administrator11 addAdministrator11(Administrator11 administrator11) {
-		getAdministrator11s().add(administrator11);
-		administrator11.setLogovanje11(this);
-
-		return administrator11;
-	}
-
-	public Administrator11 removeAdministrator11(Administrator11 administrator11) {
-		getAdministrator11s().remove(administrator11);
-		administrator11.setLogovanje11(null);
-
-		return administrator11;
 	}
 
 	public List<Polaznik11> getPolaznik11s() {

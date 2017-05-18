@@ -3,18 +3,18 @@
 	<persistence-unit name="SkolaJezika">
 	 <jta-data-source>java:jboss/datasources/mysql</jta-data-source>
 	 <class>entities.Administrator11</class>
-	 <class>entities.Ishod11</class>
 	 <class>entities.Komentar11</class>
-	 <class>entities.Kurs11</class>
 	 <class>entities.Lekcija11</class>
-	 <class>entities.Logovanje11</class>
 	 <class>entities.Odgovor11</class>
 	 <class>entities.Pitanje11</class>
-	 <class>entities.Polaznik11</class>
-	 <class>entities.Predavac11</class>
 	 <class>entities.Rezultat11</class>
 	 <class>entities.Slika11</class>
 	 <class>entities.Test11</class>
+	 <class>entities.Ishod11</class>
+	 <class>entities.Kurs11</class>
+	 <class>entities.Logovanje11</class>
+	 <class>entities.Polaznik11</class>
+	 <class>entities.Predavac11</class>
 		
 	<!-- <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>         
