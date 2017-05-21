@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -9,7 +10,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Ocenakursa.findAll", query="SELECT o FROM Ocenakursa o")
+@NamedQueries({
+	@NamedQuery(name="Ocenakursa.findAll", query="SELECT o FROM Ocenakursa o"),
+	@NamedQuery(name="Ocenakursa.findKurseveIOcene", query="SELECT o.kurs11, AVG(o.ocena) FROM Ocenakursa o GROUP BY o.kurs11.idkursa")
+})
 @Table(name="OCENAKURSA")
 public class Ocenakursa implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,6 +21,9 @@ public class Ocenakursa implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idocene;
+
+	@Temporal(TemporalType.DATE)
+	private Date datumocene;
 
 	private int ocena;
 
@@ -39,6 +46,14 @@ public class Ocenakursa implements Serializable {
 
 	public void setIdocene(int idocene) {
 		this.idocene = idocene;
+	}
+
+	public Date getDatumocene() {
+		return this.datumocene;
+	}
+
+	public void setDatumocene(Date datumocene) {
+		this.datumocene = datumocene;
 	}
 
 	public int getOcena() {

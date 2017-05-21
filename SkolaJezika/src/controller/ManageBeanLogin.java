@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class ManageBeanLogin {
 	
 	private Date datumPocetka;
 	private Date datumKraja;
+	
+	private String najboljiKurs;
 
 	private List<Kurs11> kursevi;
 	private List<Kurs11> filtriraniKursevi;
@@ -54,6 +57,10 @@ public class ManageBeanLogin {
 	public void vratiSveKurseve() throws IOException {
 		kursevi = bazaBR.vratiSveKurseve();
 	}
+	
+	public void vratiPolozeneKurseve(String username) {
+		kursevi = bazaBR.vratiPolozeneKurseveZaPolaznika(username);
+	}
 
 	@PostConstruct
 	private void init() {
@@ -61,6 +68,19 @@ public class ManageBeanLogin {
 		zanimanja.add(ADMINISTRATOR);
 		zanimanja.add(PREDAVAC);
 		zanimanja.add(POLAZNIK);
+		vratiNajboljiKurs();
+	}
+
+	private void vratiNajboljiKurs() {
+		if (!prviUMesecu()) {
+			najboljiKurs = bazaBR.getNajboljiKurs().getNazivkursa();
+		} else {
+			najboljiKurs = bazaBR.izracunajNajboljiKurs().getNazivkursa();
+		}
+	}
+
+	private boolean prviUMesecu() {
+		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 1;
 	}
 
 	public List<Kurs11> getKursevi() {
@@ -117,6 +137,14 @@ public class ManageBeanLogin {
 
 	public void setDatumKraja(Date datumKraja) {
 		this.datumKraja = datumKraja;
+	}
+
+	public String getNajboljiKurs() {
+		return najboljiKurs;
+	}
+
+	public void setNajboljiKurs(String najboljiKurs) {
+		this.najboljiKurs = najboljiKurs;
 	}
 
 	public String logout() {

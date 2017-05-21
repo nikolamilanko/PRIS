@@ -41,6 +41,10 @@ public class Polaznik11 implements Serializable {
 	@JoinColumn(name="IDLOGOVANJA")
 	private Logovanje11 logovanje11;
 
+	//bi-directional many-to-one association to Ocenakursa
+	@OneToMany(mappedBy="polaznik11")
+	private List<Ocenakursa> ocenakursas;
+
 	public Polaznik11() {
 	}
 
@@ -112,6 +116,28 @@ public class Polaznik11 implements Serializable {
 
 	public void setLogovanje11(Logovanje11 logovanje11) {
 		this.logovanje11 = logovanje11;
+	}
+
+	public List<Ocenakursa> getOcenakursas() {
+		return this.ocenakursas;
+	}
+
+	public void setOcenakursas(List<Ocenakursa> ocenakursas) {
+		this.ocenakursas = ocenakursas;
+	}
+
+	public Ocenakursa addOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().add(ocenakursa);
+		ocenakursa.setPolaznik11(this);
+
+		return ocenakursa;
+	}
+
+	public Ocenakursa removeOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().remove(ocenakursa);
+		ocenakursa.setPolaznik11(null);
+
+		return ocenakursa;
 	}
 
 }

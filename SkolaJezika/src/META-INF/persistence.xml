@@ -13,6 +13,7 @@
 	 <class>entities.Ishod11</class>
 	 <class>entities.Kurs11</class>
 	 <class>entities.Logovanje11</class>
+	 <class>entities.Ocenakursa</class>
 	 <class>entities.Polaznik11</class>
 	 <class>entities.Predavac11</class>
 		

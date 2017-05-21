@@ -7,12 +7,9 @@ import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 
 import entities.Kurs11;
 import entities.Lekcija11;
@@ -89,6 +86,17 @@ public class KomunikacijaSaBazomBean {
 
 	public List<Kurs11> vratiSveKurseveZaUsernamePolaznika(String username) {
 		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAllZaUsernamePolaznika", Kurs11.class);
+		q.setParameter("username", username);
+		List<Kurs11> kursevi = q.getResultList();
+
+		if (kursevi != null)
+			return kursevi;
+		else
+			return new ArrayList<>();
+	}
+	
+	public List<Kurs11> vratiPolozeneKurseveZaPolaznika(String username) {
+		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findPolozeneZaUsernamePolaznika", Kurs11.class);
 		q.setParameter("username", username);
 		List<Kurs11> kursevi = q.getResultList();
 
@@ -236,5 +244,35 @@ public class KomunikacijaSaBazomBean {
 
 	public Polaznik11 getPolaznikForID(int id) {
 		return em.find(Polaznik11.class, id);
+	}
+	
+	public Kurs11 getNajboljiKurs() {
+		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findNajboljiKurs", Kurs11.class);
+		
+		return q.getSingleResult();
+	}
+
+	public Kurs11 izracunajNajboljiKurs() {
+		TypedQuery<Object[]> q = em.createNamedQuery("Ocenakursa.findKurseveIOcene", Object[].class);
+		List<Object[]> list = q.getResultList();
+		
+		Kurs11 najboljiKurs = (Kurs11) list.get(0)[0];
+		double najboljaOcena = (double) list.get(0)[1];
+		for (Object[] o: list) {
+			Kurs11 kurs = (Kurs11) o[0];
+			double ocena = (double) o[1];
+			if (najboljaOcena < ocena) {
+				najboljiKurs = kurs;
+				najboljaOcena = ocena;
+			}
+			updateOcenuKursa(kurs, ocena);
+		}
+		
+		return najboljiKurs;
+	}
+
+	private void updateOcenuKursa(Kurs11 kurs, double ocena) {
+		kurs = em.find(Kurs11.class, kurs.getIdkursa());
+		kurs.setProsecnaocenakursa((float) ocena);
 	}
 }

@@ -14,7 +14,9 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="Kurs11.findAll", query="SELECT k FROM Kurs11 k"),
 	@NamedQuery(name="Kurs11.findAllZaUsernamePredavaca", query="SELECT k FROM Kurs11 k WHERE k.predavac11.logovanje11.username = :username"),
-	@NamedQuery(name="Kurs11.findAllZaUsernamePolaznika", query="SELECT k FROM Kurs11 k JOIN k.ishod11s i WHERE i.polaznik11.logovanje11.username = :username")
+	@NamedQuery(name="Kurs11.findAllZaUsernamePolaznika", query="SELECT k FROM Kurs11 k JOIN k.ishod11s i WHERE i.polaznik11.logovanje11.username = :username"),
+	@NamedQuery(name="Kurs11.findPolozeneZaUsernamePolaznika", query="SELECT k FROM Kurs11 k JOIN k.ishod11s i WHERE i.polaznik11.logovanje11.username = :username AND i.jepolozio = 1"),
+	@NamedQuery(name="Kurs11.findNajboljiKurs", query="SELECT k FROM Kurs11 k WHERE k.prosecnaocenakursa = (SELECT MAX(k1.prosecnaocenakursa) FROM Kurs11 k1)"),
 })
 @Table(name="KURS11")
 public class Kurs11 implements Serializable {
@@ -46,6 +48,10 @@ public class Kurs11 implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="IDPREDAVACA")
 	private Predavac11 predavac11;
+
+	//bi-directional many-to-one association to Ocenakursa
+	@OneToMany(mappedBy="kurs11")
+	private List<Ocenakursa> ocenakursas;
 
 	public Kurs11() {
 	}
@@ -134,6 +140,28 @@ public class Kurs11 implements Serializable {
 
 	public void setPredavac11(Predavac11 predavac11) {
 		this.predavac11 = predavac11;
+	}
+
+	public List<Ocenakursa> getOcenakursas() {
+		return this.ocenakursas;
+	}
+
+	public void setOcenakursas(List<Ocenakursa> ocenakursas) {
+		this.ocenakursas = ocenakursas;
+	}
+
+	public Ocenakursa addOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().add(ocenakursa);
+		ocenakursa.setKurs11(this);
+
+		return ocenakursa;
+	}
+
+	public Ocenakursa removeOcenakursa(Ocenakursa ocenakursa) {
+		getOcenakursas().remove(ocenakursa);
+		ocenakursa.setKurs11(null);
+
+		return ocenakursa;
 	}
 
 }
