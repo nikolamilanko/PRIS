@@ -128,7 +128,6 @@ public class AdminManagedBean {
 				ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext(); 
 				ec.redirect(ec.getRequestContextPath() + "/page-admin/pocetnaAdmin.xhtml");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {

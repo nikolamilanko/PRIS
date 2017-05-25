@@ -7,7 +7,7 @@
 	<p:dataTable id="predavacTable" var="predavac"
 		value="#{manageBeanLogin.predavaci}" scrollable="true" editable="true"
 		rowKey="#{predavac.idpredavaca}"
-		selection="#{adminMB.selektovaniPredavac}" selectionMode="single">
+		selection="#{adminMB.selektovaniPredavac}" selectionMode="single" scrollHeight="70%">
 
 		<f:facet name="header">
             <p:outputLabel value="Svi predavaci" />

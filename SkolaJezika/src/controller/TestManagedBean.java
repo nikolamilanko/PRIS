@@ -31,7 +31,6 @@ public class TestManagedBean {
 	Lekcija11 lekcija11;
 
 	Test11 test11 = new Test11();
-	// Test11 test11 = komunikacijaSaBazomBean.getPrviTest();
 
 	List<Pitanje11> pitanja = new ArrayList<>();
 	Map<Pitanje11, List<Boolean>> mapa = new HashMap<>();

@@ -8,9 +8,6 @@ import javax.persistence.TypedQuery;
 
 import entities.Polaznik11;
 
-/**
- * Session Bean implementation class PolaznikBean
- */
 @Stateful
 @LocalBean
 public class PolaznikBean {
@@ -32,7 +29,6 @@ public class PolaznikBean {
 	}
 
 	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
 		try {
 			TypedQuery<Polaznik11> query = em.createNamedQuery(
 					"Polaznik11.findZaUsernameIPassword",
@@ -42,7 +38,6 @@ public class PolaznikBean {
 			polaznik = query.getResultList().get(0);
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

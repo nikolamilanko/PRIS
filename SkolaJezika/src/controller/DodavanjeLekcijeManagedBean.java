@@ -214,7 +214,6 @@ public class DodavanjeLekcijeManagedBean {
 			}
 			return ret;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

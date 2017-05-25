@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +53,7 @@ public class ManageBeanLogin {
 		kursevi = bazaBR.vratiSveKurseveZaUsernamePolaznika(username);
 	}
 	
-	public void vratiSveKurseve() throws IOException {
+	public void vratiSveKurseve() {
 		kursevi = bazaBR.vratiSveKurseve();
 	}
 	

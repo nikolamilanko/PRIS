@@ -24,12 +24,11 @@ public class AdministratorBean implements AdministratorBeanRemote {
 	EntityManager em;
 
 	public AdministratorBean() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
 		try {
 			TypedQuery<Administrator11> query = em.createQuery(
 					"select a from Administrator11 a where a.logovanje11.idlogovanja=(select l.idlogovanja from Logovanje11 l where l.username=:username and l.password=:password)",
@@ -39,7 +38,6 @@ public class AdministratorBean implements AdministratorBeanRemote {
 			administrator = query.getResultList().get(0);
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -56,7 +54,6 @@ public class AdministratorBean implements AdministratorBeanRemote {
 	@Override
 	public boolean dodajPredavaca(String ime, String prezime, String titula, String email, String username,
 			String password) {
-		// TODO Auto-generated method stub
 		Predavac11 p = new Predavac11();
 		p.setImepredavaca(ime);
 		p.setPrezimepredavaca(prezime);
@@ -86,35 +83,30 @@ public class AdministratorBean implements AdministratorBeanRemote {
 				return log;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 	}
 
 	private boolean postojiUsername(String username) {
-		// TODO Auto-generated method stub
 		try {
 			TypedQuery<Logovanje11> q = em.createNamedQuery("Logovanje11.findForUsername", Logovanje11.class);
 			q.setParameter("username", username);
 			q.getSingleResult();
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			e.printStackTrace();
 			return false;
 		}
 	}
 
 	@Override
 	public boolean izmeniPredavaca(Predavac11 predavac) {
-		// TODO Auto-generated method stub
 		try {
 			Predavac11 p = (Predavac11) em.find(Predavac11.class, predavac.getIdpredavaca());
 			this.dodeliVrednostiPredavacu(p, predavac);
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -129,7 +121,6 @@ public class AdministratorBean implements AdministratorBeanRemote {
 
 	@Override
 	public boolean izbrisiPredavaca(Predavac11 predavac) {
-		// TODO Auto-generated method stub
 		try {
 			Predavac11 p = (Predavac11) em.find(Predavac11.class, predavac.getIdpredavaca());
 			Logovanje11 l = (Logovanje11) em.find(Logovanje11.class, p.getLogovanje11().getIdlogovanja());
@@ -137,10 +128,8 @@ public class AdministratorBean implements AdministratorBeanRemote {
 			em.remove(l);
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
-
 }

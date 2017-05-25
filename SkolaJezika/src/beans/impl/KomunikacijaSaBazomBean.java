@@ -23,9 +23,6 @@ import entities.Rezultat11;
 import entities.Slika11;
 import entities.Test11;
 
-/**
- * Session Bean implementation class TestBazaBean
- */
 @Stateless
 @LocalBean
 public class KomunikacijaSaBazomBean {
@@ -36,11 +33,8 @@ public class KomunikacijaSaBazomBean {
 	@Resource
 	SessionContext context;
 
-	/**
-	 * Default constructor.
-	 */
 	public KomunikacijaSaBazomBean() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Kurs11 findKurs() {
@@ -65,55 +59,54 @@ public class KomunikacijaSaBazomBean {
 
 	public List<Kurs11> vratiSveKurseve() {
 		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAll", Kurs11.class);
-		List<Kurs11> kursevi = q.getResultList();
-
-		if (kursevi != null)
-			return kursevi;
-		else
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
 			return new ArrayList<>();
+		}
 	}
 
 	public List<Kurs11> vratiSveKurseveZaUsernamePredavaca(String username) {
 		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAllZaUsernamePredavaca", Kurs11.class);
 		q.setParameter("username", username);
-		List<Kurs11> kursevi = q.getResultList();
-
-		if (kursevi != null)
-			return kursevi;
-		else
+		
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
 			return new ArrayList<>();
+		}
 	}
 
 	public List<Kurs11> vratiSveKurseveZaUsernamePolaznika(String username) {
 		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findAllZaUsernamePolaznika", Kurs11.class);
 		q.setParameter("username", username);
-		List<Kurs11> kursevi = q.getResultList();
 
-		if (kursevi != null)
-			return kursevi;
-		else
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
 			return new ArrayList<>();
+		}
 	}
 	
 	public List<Kurs11> vratiPolozeneKurseveZaPolaznika(String username) {
 		TypedQuery<Kurs11> q = em.createNamedQuery("Kurs11.findPolozeneZaUsernamePolaznika", Kurs11.class);
 		q.setParameter("username", username);
-		List<Kurs11> kursevi = q.getResultList();
 
-		if (kursevi != null)
-			return kursevi;
-		else
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
 			return new ArrayList<>();
+		}
 	}
 
 	public List<Predavac11> vratiSvePredavace() {
 		TypedQuery<Predavac11> q = em.createNamedQuery("Predavac11.findAll", Predavac11.class);
-		List<Predavac11> predavaci = q.getResultList();
 
-		if (predavaci != null)
-			return predavaci;
-		else
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
 			return new ArrayList<>();
+		}
 	}
 
 	public boolean izmeniPassword(String username, String noviPassword) {
@@ -124,7 +117,6 @@ public class KomunikacijaSaBazomBean {
 			l.setPassword(noviPassword);
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -206,7 +198,6 @@ public class KomunikacijaSaBazomBean {
 				res.add(query.getSingleResult());
 				return res;
 			} catch (Exception ex) {
-				// TODO: handle exception
 			}
 
 			return new ArrayList<>();

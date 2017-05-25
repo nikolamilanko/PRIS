@@ -6,11 +6,21 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
-	<title>Welcome!</title>
+	<title>Dobrodosli!</title>
+
+	<style type="text/css">
+#myform {
+	text-align: center;
+	margin-left: 40%;
+	margin-top: 20%;
+}
+</style>
 </h:head>
+
 <h:body>
-	<h:form>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+	<h:form id="myform">
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"
+			border="1">
 			<p:outputLabel for="console" value="Tip: " />
 			<p:selectOneMenu id="console" value="#{manageBeanLogin.zanimanje}"
 				style="width:125px">
@@ -28,27 +38,29 @@
 				<p:inputText value="#{adminMB.username}" />
 				<p:outputLabel value="Password: " />
 				<p:password value="#{adminMB.password}" />
-				<p:commandButton value="Login"
-					actionListener="#{adminMB.login()}" />
+				<p:commandButton value="Login" actionListener="#{adminMB.login()}" />
 			</h:panelGrid>
-			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
+			<h:panelGrid columns="2"
+				rendered="#{manageBeanLogin.zanimanje eq 'predavac'}">
 				<p:outputLabel value="Username: " />
 				<p:inputText value="#{predavacMB.username}" />
 				<p:outputLabel value="Password: " />
 				<p:password value="#{predavacMB.password}" />
-				<p:commandButton  value="Login" actionListener="#{predavacMB.login()}"/>
+				<p:commandButton value="Login"
+					actionListener="#{predavacMB.login()}" />
 			</h:panelGrid>
-			<h:panelGrid columns="2" rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
+			<h:panelGrid columns="2"
+				rendered="#{manageBeanLogin.zanimanje eq 'polaznik'}">
 				<p:outputLabel value="Username: " />
 				<p:inputText value="#{polaznikMB.username}" />
 				<p:outputLabel value="Password: " />
 				<p:password value="#{polaznikMB.password}" />
-				<p:commandButton value="Login" action="#{polaznikMB.login()}"/>
+				<p:commandButton value="Login" action="#{polaznikMB.login()}" />
 			</h:panelGrid>
+			<p:dialog header="GRESKA" widgetVar="dlg1" minHeight="40">
+				<h:outputText value="Pogresno uneti podaci" />
+			</p:dialog>
 		</h:panelGroup>
-		<p:dialog header="GRESKA" widgetVar="dlg1" minHeight="40">
-			<h:outputText  value="Pogresno uneti podaci" />
-		</p:dialog>
 	</h:form>
 
 </h:body>
