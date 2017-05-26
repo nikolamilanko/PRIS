@@ -42,6 +42,31 @@ public class KomunikacijaSaBazomBean {
 		System.out.println(kurs11.getNazivkursa() + " KURS!!!");
 		return kurs11;
 	}
+	public Kurs11 findKursForID(int id) {
+		Kurs11 kurs11 = em.find(Kurs11.class, id);
+		return kurs11;
+	}
+	public Kurs11 getKursForID(int id) {
+		return em.find(Kurs11.class, id);
+	}
+	public void updateOdgovorJePregledan(Odgovor11 odgovor11, String jePregeldan){
+		odgovor11.setJepregledan(jePregeldan);
+		em.merge(odgovor11);
+	}
+	public List<Rezultat11> getRezultatiForPolaznikAndKurs(Polaznik11 polaznik11, Kurs11 kurs11) {
+		TypedQuery<Rezultat11> q = em.createQuery(
+				"select r from Rezultat11 r where r.polaznik11.idpolaznika = :idpolaznika and r.test11.lekcija11.kurs11.idkursa =:idkursa",
+				Rezultat11.class);
+		q.setParameter("idpolaznika", polaznik11.getIdpolaznika());
+		q.setParameter("idkursa", kurs11.getIdkursa());
+		try {
+			return q.getResultList();
+		} catch (Exception e) {
+			List<Rezultat11> rez = new ArrayList<>();
+			rez.add(q.getSingleResult());
+			return rez;
+		}
+	}
 
 	public void sacuvajSlikuUBazu(Slika11 slika) {
 		em.persist(slika);

@@ -31,8 +31,8 @@ import entities.Slika11;
 public class DodavanjeLekcijeManagedBean {
 
 	@EJB
-	KomunikacijaSaBazomBean testBaza;
-
+	KomunikacijaSaBazomBean testBaza;	
+	
 	boolean isClicked = false;
 	private int radioNumberChecked = 0;
 	List<File> fajlovi = new ArrayList<>();
@@ -43,12 +43,14 @@ public class DodavanjeLekcijeManagedBean {
 	private List<String> tipoviLekcije;
 	private String tipLekcije;
 	private String videoLink = "";
+	private Kurs11 kurs11;
 
 	@PostConstruct
 	private void init() {
 		tipoviLekcije = new ArrayList<>();
 		tipoviLekcije.add("Lekcija sa slikom i tekstom");
 		tipoviLekcije.add("Lekcija sa videom");
+		kurs11 = testBaza.getKursForID(1);
 
 	}
 
@@ -214,6 +216,7 @@ public class DodavanjeLekcijeManagedBean {
 			}
 			return ret;
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -232,7 +235,8 @@ public class DodavanjeLekcijeManagedBean {
 		} else {
 			System.out.println("NAZIV: "+naziv+"     "+videoLink);
 			Lekcija11 lekcija11 = new Lekcija11();
-			lekcija11.setKurs11(testBaza.findKurs());
+			lekcija11.setNazivlekcije(naziv);
+			lekcija11.setKurs11(kurs11);
 			lekcija11.setTekstlekcije("");
 			lekcija11.setVideolekcije(videoLink);
 			int idLekcije = testBaza.sacuvajLekcijuUBazu(lekcija11);
@@ -249,10 +253,11 @@ public class DodavanjeLekcijeManagedBean {
 			System.out.println("LEKICJA ISPISI" + opisLekcije + "   NAZIV" + naziv);
 
 			Lekcija11 lekcija11 = new Lekcija11();
-			lekcija11.setKurs11(testBaza.findKurs());
+			lekcija11.setKurs11(kurs11);
 			lekcija11.setTekstlekcije(opisLekcije);
 			lekcija11.setVideolekcije("");
 			lekcija11.setSlika11s(slike);
+			lekcija11.setNazivlekcije(naziv);
 			int idLekcije = testBaza.sacuvajLekcijuUBazu(lekcija11);
 			for (Slika11 slika11 : slike) {
 				slika11.setLekcija11(lekcija11);

@@ -5,9 +5,7 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
-<h:head>
-	<title>Dodavanje lekcije</title>
-</h:head>
+<h:head></h:head>
 <h:body>
 	<h:form enctype="multipart/form-data">
 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -25,18 +23,23 @@
 
 
 	<h:form id="test1">
-		<p:panelGrid
-			rendered="#{dodavanjeLekcijeManagedBean.tipLekcije eq 'Lekcija sa slikom i tekstom'}">
-			<p:outputLabel value="Naziv lekcije:"></p:outputLabel>
-			<p:inputText value="#{dodavanjeLekcijeManagedBean.naziv}" />
-			<p:editor widgetVar="editor1"
+		<p:panelGrid rendered="#{dodavanjeLekcijeManagedBean.tipLekcije eq 'Lekcija sa slikom i tekstom'}">
+			<p:outputLabel
+				
+				value="Naziv lekcije:"></p:outputLabel>
+			<p:inputText
+				value="#{dodavanjeLekcijeManagedBean.naziv}" />
+			<p:editor
+				widgetVar="editor1"
 				value="#{dodavanjeLekcijeManagedBean.opisLekcije}" height="300"
 				style="margin-bottom:10px" />
-			<p:commandButton value="Potvrdi"
+			<p:commandButton
+				value="Potvrdi"
 				oncomplete="#{dodavanjeLekcijeManagedBean.ispisOpisa()}"
 				icon="ui-icon-disk" />
-			<p:commandButton value="Otkazi" type="button"
-				onclick="PF('editor1').clear();" icon="ui-icon-close" />
+			<p:commandButton
+				value="Otkazi" type="button" onclick="PF('editor1').clear();"
+				icon="ui-icon-close" />
 		</p:panelGrid>
 	</h:form>
 
@@ -53,8 +56,8 @@
 				<p:graphicImage width="500" height="313"
 					value="#{dodavanjeLekcijeManagedBean.streamIzUplFajla()}" />
 			</p:galleria>
-			<p:commandButton value="Sacuvaj lekciju" render="test2" update="@all"
-				action="#{dodavanjeLekcijeManagedBean.sacuvajLekciju()}"></p:commandButton>
+			<p:commandButton value="Sacuvaj lekciju"
+				render = "test2" update="@all" action="#{dodavanjeLekcijeManagedBean.sacuvajLekciju()}"></p:commandButton>
 		</h:panelGroup>
 	</h:form>
 	<h:form id="video">
@@ -70,7 +73,7 @@
 			rendered="#{dodavanjeLekcijeManagedBean.tipLekcije eq 'Lekcija sa videom'}"
 			value="Sacuvaj"
 			action="#{dodavanjeLekcijeManagedBean.sacuvajLekicjuZaVideo()}"
-			update="@form"></p:commandButton>
+			update="@all" ></p:commandButton>
 
 	</h:form>
 

@@ -35,7 +35,7 @@ public class ResavanjeTestaManagedBean {
 
 	@PostConstruct
 	private void testPopuni() {
-		test11 = komunikacijaSaBazomBean.getTestForID(24);
+		test11 = komunikacijaSaBazomBean.getTestForID(27);
 		System.out.println("TEST TEST TEST");
 		polaznik11 = komunikacijaSaBazomBean.getPolaznikForID(1);
 		pitanja = komunikacijaSaBazomBean.getPitanjaForTest(test11);
@@ -82,6 +82,7 @@ public class ResavanjeTestaManagedBean {
 			System.out.println("PITANJE " + entry.getKey().getTekstpitanja());
 			odgovor11.setPitanje11(entry.getKey());
 			odgovor11.setPolaznik11(polaznik11);
+	        odgovor11.setJepregledan("ne");
 			komunikacijaSaBazomBean.saveOdgovor(odgovor11);
 		}
 		for (Entry<Pitanje11, ArrayList<Boolean>> entry : polaznikoviOdogovoriNaPitanjaSaViseOpcija.entrySet()) {
@@ -111,6 +112,7 @@ public class ResavanjeTestaManagedBean {
 			odgovor11.setObelezeniiodogovara(obelezeniOdgovori);
 			odgovor11.setPitanje11(entry.getKey());
 			odgovor11.setPolaznik11(polaznik11);
+			odgovor11.setJepregledan("da");
 			komunikacijaSaBazomBean.saveOdgovor(odgovor11);
 
 		}

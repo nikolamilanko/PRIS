@@ -31,6 +31,7 @@ public class TestManagedBean {
 	Lekcija11 lekcija11;
 
 	Test11 test11 = new Test11();
+	// Test11 test11 = komunikacijaSaBazomBean.getPrviTest();
 
 	List<Pitanje11> pitanja = new ArrayList<>();
 	Map<Pitanje11, List<Boolean>> mapa = new HashMap<>();
@@ -39,6 +40,7 @@ public class TestManagedBean {
 	@PostConstruct
 	public void testPopuni() {
 		lekcija11 = komunikacijaSaBazomBean.getLekcijaForID(1);
+		System.out.println("ID LEKCIJA: " + lekcija11.getIdlekcije());
 
 	}
 
@@ -79,7 +81,10 @@ public class TestManagedBean {
 	public void savePitanjaUBazu() {
 		if (ispisiGreske()) {
 			test11.setLekcija11(lekcija11);
+			System.out.println("LEKCIJA ID: " + lekcija11.getIdlekcije());
+			System.out.println("PRE");
 			komunikacijaSaBazomBean.saveTest(test11);
+			System.out.println("POSLE");
 			for (int i = 0; i < pitanja.size(); i++) {
 				pitanja.get(i).setTest11(test11);
 				for (int j = 0; j < pitanja.get(i).getOdgovornapitanje11s().size(); j++) {

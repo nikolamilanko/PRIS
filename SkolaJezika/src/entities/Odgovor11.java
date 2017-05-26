@@ -18,6 +18,8 @@ public class Odgovor11 implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idodgovora;
 
+	private String jepregledan;
+
 	private String obelezeniiodogovara;
 
 	private String tekstodgovora;
@@ -41,6 +43,14 @@ public class Odgovor11 implements Serializable {
 
 	public void setIdodgovora(int idodgovora) {
 		this.idodgovora = idodgovora;
+	}
+
+	public String getJepregledan() {
+		return this.jepregledan;
+	}
+
+	public void setJepregledan(String jepregledan) {
+		this.jepregledan = jepregledan;
 	}
 
 	public String getObelezeniiodogovara() {

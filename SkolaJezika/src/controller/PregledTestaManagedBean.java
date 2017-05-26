@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import beans.impl.KomunikacijaSaBazomBean;
+import entities.Ishod11;
 import entities.Odgovor11;
 import entities.Odgovornapitanje11;
 import entities.Pitanje11;
@@ -36,7 +37,7 @@ public class PregledTestaManagedBean {
 
 	@PostConstruct
 	private void popuniTest() {
-		test11 = komunikacijaSaBazomBean.getTestForID(24);
+		test11 = komunikacijaSaBazomBean.getTestForID(27);
 		polaznik11 = komunikacijaSaBazomBean.getPolaznikForID(1);
 		pitanja = komunikacijaSaBazomBean.getPitanjaForTest(test11);
 		for (Pitanje11 pitanje11 : pitanja) {
@@ -74,6 +75,31 @@ public class PregledTestaManagedBean {
 			}
 		}
 		komunikacijaSaBazomBean.updateRezultatBrPoena(rezultat11, test11, (int) brojPoena);
+		for(Entry<Pitanje11, ArrayList<Odgovor11>> entry : polaznikoviOdgovoriZaPitanje.entrySet()){
+			System.out.println(entry.getValue().get(0).getTekstodgovora());
+			komunikacijaSaBazomBean.updateOdgovorJePregledan(entry.getValue().get(0),"da");
+		}
+		try {
+			if (test11.getDatumtesta().compareTo(test11.getLekcija11().getKurs11().getDatumkraja()) >= 0) {
+				for (Rezultat11 rezultat112 : komunikacijaSaBazomBean.getRezultatiForPolaznikAndKurs(polaznik11,test11.getLekcija11().getKurs11())) {
+					if (rezultat112.getPolozio() == 0) {
+						Ishod11 ishod11 = new Ishod11();
+						ishod11.setKurs11(test11.getLekcija11().getKurs11());
+						ishod11.setJepolozio((byte) 0);
+						ishod11.setPolaznik11(polaznik11);
+						return;
+					}
+				}
+				
+				Ishod11 ishod11 = new Ishod11();
+				ishod11.setKurs11(test11.getLekcija11().getKurs11());
+				ishod11.setJepolozio((byte) 1);
+				ishod11.setPolaznik11(polaznik11);
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public ArrayList<Integer> vratiListuBrojevaZaString(Pitanje11 pitanje11, String str) {
